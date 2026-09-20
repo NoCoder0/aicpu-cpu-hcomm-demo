@@ -9,4 +9,9 @@
 *.pid
 /demo/host_server
 /demo/npu_reader
+/full_hcomm/npu_reader
+/full_hcomm/host_server
+/full_hcomm/source/
+/full_hcomm/deploy/
+/full_hcomm/python_deps/
 __pycache__/

@@ -1,5 +1,10 @@
 # Host DRAM → NPU HBM：最小 RDMA SGL Demo 可行性
 
+**当前分支最新结果：完整 hcomm 源码构建版已于 2026-09-20 23:24 实机通过。**
+见 [完整 hcomm 说明](full_hcomm/README.md) 和 [本版实测报告](full_hcomm/RESULT.md)。
+原有 RA/HCCP 版本保存在 `baseline/ra-hccp-verified`（`af0719f`）；
+当前分支为 `feature/full-hcomm-host-to-hbm`。以下内容保留首版结果和早期可行性设计。
+
 日期：2026-09-20。工作区：`C:/code/RDMA_DEMO/rdma_sgl_host_to_hbm`。
 **最新状态（22:39）：单 SGE 的 Host DRAM → NPU HBM RDMA READ 已实机跑通。**
 HBM 中读到 `hello rdma demo`（含 NUL 共16字节），成功 CQE，4080字节哨兵不变，两端退出码0。

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-09-20T23:24:51.410338",
+  "npu_exit": 0,
+  "npu_shell_stderr": "",
+  "npu_log": {
+    "host": "10.1.101.201",
+    "stdout": "LIBRARY HcclGetCommName => /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libhcomm.so\nLIBRARY HcclReadByAscendQP => /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libhccl_plf.so\nLIBRARY hcclCreateAscendQP => /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libhccl_plf.so\naclInit(nullptr) rc=0\naclrtSetDevice(0) rc=0\naclrtCreateStream(&stream) rc=0\nHcclRdmaInitForRead() rc=0\nLOADED /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libhccl_plf.so\nLOADED /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libhcomm.so\nLOADED /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libra.so\nLOADED /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/deploy/hcomm/lib64/libra_hdc.so\nhcclAllocWindowMem(&hbm, DEMO_BYTES) rc=0\naclrtMemset(hbm, DEMO_BYTES, 0xa5, DEMO_BYTES) rc=0\nhcclRegisterMem(&mr) rc=0\nhcclCreateAscendQP(&local) rc=0\nhcclModifyAscendQPEx(&local, &remote, &qos) rc=0\nNPU hcomm QP qpn=42 gid=::ffff:20.168.0.1 gid_index=3\nPASS: hcomm READ rejects null QP, zero length, multi-packet length, overflow and zero timeout\nHcclReadByAscendQP(&local, &destination, &source, 15000, stream, &completion) rc=0\nHCOMM READ CQ wr_id=1 status=0 opcode=2 byte_len=16 vendor_err=0\naclrtSynchronizeStream(stream) rc=0\naclrtMemcpy(result, sizeof(result), hbm, DEMO_BYTES, ACL_MEMCPY_DEVICE_TO_HOST) rc=0\nPASS: source-built hcomm HBM='hello rdma demo' bytes=16 SGE=1 guard_bytes=4080 unchanged\nhcclDestroyAscendQP(&local) rc=0\nhcclDeRegisterMem(&mr) rc=0\nhcclFreeWindowMem(hbm) rc=0\nhcclAscendRdmaDeInit() rc=0\naclrtDestroyStream(stream) rc=0\naclrtResetDevice(0) rc=0\naclFinalize() rc=0\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "host_exit": 0,
+  "host_log": {
+    "host": "10.1.101.32",
+    "stdout": "Host mlx5_3 port=1 gid_index=3 max_sge=30 max_sge_rd=30 active_mtu=3\nREADY control=10.1.101.32:19515 RDMA=20.168.0.17 payload='hello rdma demo' bytes=16\nQP RTS local_qpn=555 remote_qpn=42 mtu=3\nPASS: NPU confirmed RDMA READ and HBM payload/guard validation\n",
+    "stderr": "",
+    "exit": 0
+  }
+}
