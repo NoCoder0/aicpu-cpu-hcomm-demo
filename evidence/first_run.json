@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-09-20T22:34:35.953555",
+  "npu_exit": 1,
+  "npu_shell_stderr": "",
+  "npu_log": {
+    "host": "10.1.101.201",
+    "stdout": "aclInit(nullptr) rc=0\naclrtSetDevice(0) rc=0\naclrtCreateStream(&stream) rc=0\naclrtMalloc(&hbm, DEMO_BYTES, ACL_MEM_MALLOC_HUGE_FIRST) rc=0\naclrtMemset(hbm, DEMO_BYTES, 0xa5, DEMO_BYTES) rc=0\nTsdOpen(0, 1) rc=0\nRaInit(&config) rc=128000\nFAIL: RaInit(&config) (errno=20: Not a directory)\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "host_exit": 143,
+  "host_log": {
+    "host": "10.1.101.32",
+    "stdout": "Host mlx5_3 port=1 gid_index=3 max_sge=30 max_sge_rd=30 active_mtu=3\nREADY control=10.1.101.32:19515 RDMA=20.168.0.17 payload='hello rdma demo' bytes=16\n",
+    "stderr": "",
+    "exit": 0
+  }
+}

@@ -1,0 +1,3 @@
+[submodule "reference/hcomm"]
+	path = reference/hcomm
+	url = https://github.com/hicann/hcomm.git

@@ -1,0 +1,16 @@
+[
+  {
+    "host": "10.1.101.201",
+    "stdout": "2026-09-20T22:02:37+08:00\nipaddr:20.168.0.1\nnetmask:255.255.255.0\nlink status: UP\nqpn    status    type   dst_qpn          ip                                  src_port     send_psn        recv_psn\ntotal_qp_count: 0\nlink rocep162s0f0/1 state ACTIVE physical_state LINK_UP netdev enp162s0f0 \nlink rocep162s0f1/1 state DOWN physical_state DISABLED netdev enp162s0f1 \n",
+    "stderr": "",
+    "exit": 0,
+    "command": "date -Is; /usr/local/Ascend/driver/tools/hccn_tool -i 0 -ip -g; /usr/local/Ascend/driver/tools/hccn_tool -i 0 -link -g; /usr/local/Ascend/driver/tools/hccn_tool -i 0 -qp_info -g; rdma link show"
+  },
+  {
+    "host": "10.1.101.32",
+    "stdout": "2026-09-20T22:02:36+08:00\nhost4\nhca_id:\tmlx5_3\n\tfw_ver:\t\t\t\t28.47.1026\n\tmax_sge:\t\t\t30\n\tmax_sge_rd:\t\t\t30\nenp165s0f1np1    UP             20.168.0.17/24 \n20.168.0.1 lladdr c0:3e:50:1d:6a:4d REACHABLE \nlink mlx5_3/1 lqpn 1 type GSI state RTS sq-psn 0 comm [ib_core] \n",
+    "stderr": "",
+    "exit": 0,
+    "command": "date -Is; hostname; ibv_devinfo -d mlx5_3 -v | grep -E 'hca_id:|fw_ver:|max_sge:|max_sge_rd:'; ip -br -4 addr show enp165s0f1np1; ip neigh show dev enp165s0f1np1; rdma resource show qp link mlx5_3/1"
+  }
+]

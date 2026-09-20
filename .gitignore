@@ -1,0 +1,12 @@
+/build/
+/dist/
+*.o
+*.so
+*.so.*
+*.a
+*.tar.gz
+*.run
+*.pid
+/demo/host_server
+/demo/npu_reader
+__pycache__/
