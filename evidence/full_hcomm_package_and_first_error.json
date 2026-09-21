@@ -1,6 +1,0 @@
-{
-  "host": "10.1.101.201",
-  "stdout": "5e5313e9e8679cb7b2a7c7db959cff48b588730e9c722ae5fd6ce906b57b101f  /data1/z00502111/rdma_sgl_host_to_hbm/full_hcomm/source/build_out/cann-hcomm_9.0.0_linux-aarch64.run\n[ERROR] HCCL(632836,npu_reader):2026-09-20-23:24:11.900.388 [externalinput.cc:575] [632836][Parse][LinkConnTimeOut]environmental variable HCCL_CONNECT_TIMEOUT error, errNo[0x0000000005010000]timeOutEnv[15s] timeRange[120s,7200s]\n",
-  "stderr": "",
-  "exit": 0
-}

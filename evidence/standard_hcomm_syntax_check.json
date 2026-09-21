@@ -1,6 +1,0 @@
-{
-  "host": "10.1.101.201",
-  "stdout": "PASS: public-header syntax checks (Host, NPU control, AICPU kernel, probe)\n",
-  "stderr": "",
-  "exit": 0
-}

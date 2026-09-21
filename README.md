@@ -1,110 +1,175 @@
-# Host DRAM → NPU HBM：最小 RDMA SGL Demo 可行性
+# AICPU ↔ CPU 标准 hcomm RDMA READ demo
 
-**当前分支：`feature/nocoder-hcomm-host3`。标准 hcomm READ 已于2026-09-21实机通过。**
-使用 NoCoder0 `feat/aicpu-urma-design` 固定提交及兼容修复，在 Host3/A3 的独立 CANN 9.1 容器内，
-通过公开接口建链并将16字节从 Host3 DRAM 读入 NPU2 HBM，4080字节哨兵不变，两端退出0。
-当前版本与限制：[标准接口说明](standard_hcomm/README.md)、[实测报告](standard_hcomm/RESULT_NOCODER.md)。
-仅验证最小单段读取，多 SGE 尚未验证。
+在独立 CANN 9.1 容器内，用公开 `Hcomm*` 接口建链，由 AICPU 调用
+`HcommReadOnThread` 将 Host DRAM 的16字节读取到 NPU HBM，并检查其余4080字节哨兵。
+这是单段 READ（最小单 SGE），不代表已验证多 SGE、最大 SGL、性能或压力场景。
 
-**上一分支结果：含自定义 READ 扩展的完整 hcomm 源码构建版于 2026-09-20 23:24 实机通过。**
-见 [完整 hcomm 说明](full_hcomm/README.md) 和 [本版实测报告](full_hcomm/RESULT.md)。
-原有 RA/HCCP 版本保存在 `baseline/ra-hccp-verified`（`af0719f`）；
-扩展 READ 分支为 `feature/full-hcomm-host-to-hbm`。以下内容保留首版结果和早期可行性设计。
+- Demo：[NoCoder0/aicpu-cpu-hcomm-demo / feat/aicpu-cpu-rdma-demo](https://github.com/NoCoder0/aicpu-cpu-hcomm-demo/tree/feat/aicpu-cpu-rdma-demo)。
+- hcomm：[NoCoder0/hcomm / feat/aicpu-cpu-rdma](https://github.com/NoCoder0/hcomm/tree/feat/aicpu-cpu-rdma)，
+  固定提交 `33d156bf832744a4f767144149ed1b2e304ff2e3`，基于原分支 `feat/aicpu-urma-design` 的
+  `64ef7f9e05964add831d976876ce54adb74cd286`，包含 Host/A3 兼容修改。
+- hcomm 修改已在独立仓库提交；本仓通过 `reference/hcomm` 子模块引用，不需要再应用 patch。
+- 回归结果见 [VALIDATION.md](VALIDATION.md)。
 
-日期：2026-09-20。工作区：`C:/code/RDMA_DEMO/rdma_sgl_host_to_hbm`。
-**最新状态（22:39）：单 SGE 的 Host DRAM → NPU HBM RDMA READ 已实机跑通。**
-HBM 中读到 `hello rdma demo`（含 NUL 共16字节），成功 CQE，4080字节哨兵不变，两端退出码0。
-见 [实测报告](RESULT.md)、[源码与运行说明](demo/README.md)、[原始日志](evidence/run_20260920_223927.json)。
-按照后续先跑通单段读取的要求，实际首版使用 `RaTypicalQpCreate`，未修改 hcomm。
-多 SGE / 大块多包传输尚未验证。
+## 最小文件集与审阅入口
 
-**以下保留最初的双 SGE 可行性设计，描述的是后续扩展，不代表已经完成的实现。**
+| 文件 | 用途 |
+|---|---|
+| `npu_reader.cpp` | A3 控制程序与 AICPU 用户 kernel；直接调用标准 READ/Drain/Batch 接口 |
+| `host_server.cpp` | Host DRAM 注册、标准建链、等待读取和校验完成 |
+| `common.h` | 双端 IP、NPU ID、端口、opaque MR 交换及 Channel 创建 |
+| `standard_read.json` | ACL 用户 kernel 加载配置 |
+| `build.sh` / `deploy.sh` / `run.sh` | 容器内构建 hcomm、部署库并编译 demo、运行 |
+| `tests/` | 链接实际 hcomm/插件的5项兼容回归测试 |
+| `reference/hcomm` | 固定版本的 hcomm 子模块 |
 
-补充：已参考固定版本 hcomm 源码，选定 `RaQpCreateWithAttrs → RaTypicalQpModify → RaSendWrV2 → rtRDMADBSend → RaPollCq` 路径。默认 Typical QP 的 Lite 发送 SGE 配置为1，需显式申请2并检查驱动接口版本；详见 [NPU接口方案](HCOMM_API_PLAN.md)。
+旧 RA demo、旧 full_hcomm 实现、旧环境试验和日志不在当前文件树中；历史提交仍保留。
+编译产物、运行日志和部署 SHA256 清单均生成在 `build/`，不提交到 Git。
 
-## 结论
-
-**协议层面方案成立，现场具备部分条件，可以进入最小验证；当前不能宣布端到端可用。**
-首版只做一条 RC QP、一次 RDMA READ、2 个本地 SGE，将鲲鹏连续 DRAM 数据直接读入 NPU 的两个不连续 HBM 区间。
-
-还必须验证三件事：NPU HBM 能被卡侧 RDMA 注册；NPU QP 能与 Host4 的 mlx5 QP 互通；NPU 当前驱动/QP 支持 READ 的单 WR 多 SGE。
-Host 网卡的“30 段”不是 NPU 的能力，也不是本实验必须达到的目标。
-
-## 选定设备与现场证据
-
-| 项目 | A3 D / NPU 端 | 鲲鹏 Host4 端 |
-|---|---|---|
-| 管理 / VPC IP | 10.1.101.201 | 10.1.101.32 |
-| RDMA IP | 20.168.0.1/24 | 20.168.0.17/24 |
-| 设备 | 物理卡0、Chip0，hccn_tool设备0 | mlx5_3，端口1 |
-| Linux RDMA 网口 | 卡侧端口，不是宿主机 enp162s0f0 | enp165s0f1np1 |
-| 本次查询状态 | Link UP；活动QP数量0 | 网口UP；NPU邻居REACHABLE；仅系统GSI QP |
-| SGE能力 | NPU卡侧尚未取得 | max_sge=30，max_sge_rd=30 |
-| 软件 | toolkit路径指向cann-9.0.0；存在libra.so | 存在gcc及infiniband/verbs.h |
-| 网卡固件 | 卡侧版本尚未采集 | 28.47.1026 |
-
-201 的普通 `ibv_devinfo` 返回 `rocep162s0f0/1` 的16段上限；`rdma link` 将它们映射到宿主机 enp162s0f0/1，**不能用来证明NPU卡侧的SGE上限**。
-本次 NPU 到 20.168.0.17 的 hccn_tool ping 在12秒外部超时后退出（124），未得到成功结果；Link和邻居记录不替代端到端READ验证。
-
-## “SGL读取”的精确定义
-
-本设计的源端Host内存连续，目标HBM地址离散。标准READ WR只有一个远端地址/rkey，SGE列表描述发起端的本地目标内存。
-若需求改为“从Host多个不连续源地址一次gather”，普通单条READ WR无法直接表达，需要另做协议设计。[标准WR定义](https://man7.org/linux/man-pages/man3/ibv_post_send.3.html)
+## 建链与读取流程
 
 ```text
-Host4 DRAM（注册8 KiB，允许REMOTE_READ）
-  [ A:4 KiB ][ B:4 KiB ]
-           |
-           | NPU发起一条RDMA READ，2个SGE，总长8 KiB
-           v
-NPU HBM（分配并注册16 KiB，允许本地写）
-  [ A:4 KiB ][ 哨兵:4 KiB ][ B:4 KiB ][ 哨兵:4 KiB ]
-   offset=0                offset=8192
+Host3：CPU / HOST-ROCE                    A3：AICPU_TS / DEVICE-ROCE
+HcommEndpointCreate                      aclInit / aclrtSetDevice(2)
+                                         HcommEndpointCreate
+分配 DRAM，填入 hello rdma demo           分配4096字节 HBM，填充0xa5
+HcommMemReg / HcommMemExport              HcommMemReg / HcommMemExport
+           ← 管理 TCP:19516 交换 opaque 描述符和端口 →
+                                         HcommMemImport（Host DRAM）
+HcommChannelDescInit                      HcommChannelDescInit
+HcommChannelCreate(CPU, SERVER)           HcommChannelCreate(AICPU_TS, CLIENT)
+           ← hcomm 内部 TCP:19517 白名单、能力、资源交换与 QP 建链 →
+HcommChannelGetStatus == READY            HcommChannelGetStatus == READY
+           ← 管理 TCP 确认两端 READY →
+保持源 MR 有效                           HcommThreadAlloc(AICPU_TS)
+                                         ACL 启动 StandardReadKernel
+                                         HcommBatchModeStart
+                                         HcommReadOnThread（16字节）
+     Host DRAM ===== RDMA READ ======>   NPU HBM
+                                         HcommChannelDrainOnThread
+                                         HcommBatchModeEnd（提交任务）
+                                         同步 kernel stream 与 ACL device
+                                         HBM 回拷，仅作结果验证
+           ← 校验通过确认 →
+销毁 Channel、注销 MR                     释放 Thread、Channel、MR、HBM
 ```
 
-HBM可先申请一个大块再选两个间隔区间，只需一个MR/lkey；这仍是真实的非连续本地SGL，不要求申请两个独立物理内存块。
-首版CPU发起控制和提交即可，不要求AI Core算子发起RDMA。
+建链由 `HcommChannelCreate` 内部完成；应用不调用 RA 或 libibverbs、不手工交换 QPN/PSN，
+不解析 MR 描述符中的 rkey。管理 TCP 不传 payload。Host 只作 READ responder，无须导入对端 HBM。
 
-## 最小实现路径
+此分支的插件 Endpoint 不支持 `HcommEndpointGetListenPort`，因此用公开 `HcommChannelDesc.port`
+显式指定19517；实际监听和 QP 状态推进仍由 hcomm 完成。此版本也没有公开 `HcommThreadResGetInfo`，
+因此使用 `aclrtSynchronizeDevice()` 等待已提交的通信任务，不解引用私有线程句柄。
+READ、Drain 返回0仅表明调用成功，必须检查 BatchEnd、同步、数据内容和完整清理结果。
 
-计划分两个可执行文件：`host_server` 与 `npu_reader`。它们尚未创建。
-首版固定1个QP、1个在途READ，队列深度取较小值（例如16），不做流水线、带宽测试或30段扩展。
+## 环境与准备
 
-1. **Host server**：使用libibverbs，绑定mlx5_3/1；申请页对齐DRAM，按位置生成可校验数据，注册允许REMOTE_READ的MR；创建RC QP，确认目标端READ权限及responder资源。
-2. **NPU reader**：初始化ACL并选设备0；申请16 KiB HBM，全部填充哨兵；使用与现场驱动匹配的卡侧RA/HCCP接口注册HBM并获得有效地址/lkey，创建支持READ的卡侧QP。
-3. **建链和元数据**：在VPC面通过TCP交换版本、长度、RDMA地址/GID、QPN、PSN、MTU、READ资源及Host MR地址/rkey；具体卡侧建链API必须先验证，不假定RA内部握手与自定义verbs握手兼容。RoCE版本/GID index根据现场查询选择，不硬编码。
-4. **提交**：NPU提交一条READ，远端地址为Host MR起点，本地SGE为HBM+0和HBM+8192，各4096 B。逐个填入正确的地址/长度/lkey；不使用Host DRAM作为数据中转。
-5. **完成与验证**：使用所选QP模式对应的完成机制，检查成功状态和wr_id；若模式需要额外doorbell/stream提交，执行完整流程，不能把发送接口返回0当作传输完成。完成且数据对ACL可见后，将HBM拷回CPU做逐字节验证，检查两个哨兵区未变化。
-6. **结束**：通过TCP通知Host验证结果；操作完成后注销MR、释放QP/CQ/内存并退出。异常路径设置超时并停止后续提交，先终止在途访问再释放其资源。
+| 角色 | 管理 IP | RDMA IP / 设备 | 本任务独立容器 |
+|---|---|---|---|
+| A3 D | 10.1.101.201 | 20.168.0.3 / device 2 | rdma-hcomm-cann91 |
+| Host3 | 10.1.101.27 | 20.168.0.19 / mlx5_2，enp165s0f0np0 | rdma-hcomm-host-cann91 |
 
-HBM→CPU只用于最终验证，不属于被测Host→HBM传输路径。
-禁止把HBM指针直接交给普通Host侧 `ibv_reg_mr` 并假定它可注册；必须验证对应NPU内存注册机制。
+容器由各自 hhy 的 CANN 9.1 环境复制，已存在时直接复用。所有编译、部署和执行在这些独立
+容器内进行。`deploy.sh` 会替换目标容器内的 CANN hcomm 库与 A3 kernel 包。
+容器需能访问 RDMA 设备，A3 还需能访问 NPU、匹配的驱动及 HCCP；现场容器采用 host 网络。
+宿主机只用于容器管理、SSH 和只读网络诊断。
 
-## 现有代码能复用什么
+容器依赖：AArch64 Linux、CANN `/usr/local/Ascend/cann-9.1.0`（含 hcc 设备编译器）、
+g++、CMake、make、Python3、git、binutils、RDMA 开发库及 hcomm 上游构建依赖。
+测试另需 `/usr/src/googletest/googletest` 源码，以相同旧 C++ string ABI 编译。
+`CANN` 可覆盖安装路径，`JOBS` 可调整构建并行度（默认16）。两端使用相同的子模块提交。
 
-本地MemFabric参考版本：`4b4d6f0b`，仅阅读，未修改共享源码。
+Host3 已验证加载 CANN 自带的 `devlib/aarch64/libascend_hal.so`，未编写 HAL 替代实现。
+此结果不意味着任意未安装 CANN/HAL 的裸 CPU 环境可直接运行。
 
-- [device_rdma_transport_manager.cpp](../memfabric_hybrid/src/hybm/csrc/transport/device/device_rdma_transport_manager.cpp)：`RemoteIO()` 有READ路径，但当前 `wr.buf_num=1`。其地址修正函数也只处理第一个SGE；不能只把1改成2。
-- [dl_hccp_def.h](../memfabric_hybrid/src/hybm/csrc/under_api/dl_hccp_def.h)：`send_wr_v2` 含 `buf_list/buf_num/dst_addr/rkey/op`。结构有列表字段不证明当前驱动接受多段READ。
-- [dl_hccp_api.h](../memfabric_hybrid/src/hybm/csrc/under_api/dl_hccp_api.h)：可参考MR/QP/发送接口封装；现场ABI仍需核对。
-- 现场 `libra.so` 导出 `RaTypicalQpCreate/Modify`、`RaTypicalSendWr`、`RaGetQpAttr`、`RaMrReg`、`RaPollCq` 等符号。后续已从参考hcomm源码取得接口定义和调用链，见 `HCOMM_API_PLAN.md`；这些头文件与现场库的ABI匹配仍是实现前置项，不能仅凭符号名判断兼容。
-- 原有HCOM/CPU SGL性能demo不作为NPU SGL已实现的证据；也不将HIXL的批量拷贝自动视为单WR多SGE。
+### 1. 每次运行前检查双向 RDMA 网络
 
-## 验证顺序与通过标准
+```bash
+# A3 宿主机
+/usr/local/Ascend/driver/tools/hccn_tool -i 2 -ip -g
+/usr/local/Ascend/driver/tools/hccn_tool -i 2 -link -g
+timeout 40 /usr/local/Ascend/driver/tools/hccn_tool -i 2 -ping -g address 20.168.0.19 pkt 64
+# Host3 宿主机
+ping -c 3 -W 2 -I 20.168.0.19 20.168.0.3
+```
 
-| 阶段 | 最小验证 | 判定 |
-|---|---|---|
-| 0：接口与能力 | 取得匹配驱动的RA头文件/说明；查询或验证QP能力及HBM注册 | 不猜ABI；能力不明时标记UNKNOWN |
-| 1：单段基线 | K=1，从Host读4096 B到HBM并校验 | 证明QP互通、HBM注册与READ完成路径 |
-| 2：SGL目标 | K=2，一条WR读8192 B到上述两个HBM区间 | 两段逐字节一致，所有哨兵不变 |
-| 3：复核 | 换数据种子重复10次，记录QP和实际提交 | 数据WR为1条且SGE为2，无隐藏分拆或DRAM中转 |
+必须看到 Link UP，双向各3包收到。网络失败时先确认实际配对；若换卡/Host，修改
+`common.h` 中管理 IP、双方 RDMA IP 和物理 NPU ID，两端重新编译，再检查双向 ping。
 
-日志至少包括设备/IP、实际QP标识、READ能力来源、opcode、WR数量、SGE数量及长度、完成状态、字节校验与哨兵结果。
-QP创建成功后读取实际能力；申请参数不充当实际返回值。[设备能力定义](https://man7.org/linux/man-pages/man3/ibv_query_device.3.html)
+### 2. 两端容器中分别拉取同一版本
 
-若K=1成功而K=2不受支持，结论应为“Host→HBM READ可用，但当前路径的单WR多SGE不可用/未证实”，不得把两条单段READ包装为SGL成功。
-后续实现首先解决NPU接口、QP互通与HBM注册，再编写这两个最小程序；本阶段不启动业务、不重启设备、不更改网络配置。
+```bash
+# 宿主机：如容器停止，先 docker start <容器名>，然后进入容器
+# Host3：docker exec -it rdma-hcomm-host-cann91 bash
+# A3：   docker exec -it rdma-hcomm-cann91 bash
+cd /workspace
+GIT_LFS_SKIP_SMUDGE=1 git clone --branch feat/aicpu-cpu-rdma-demo \
+  --recurse-submodules --shallow-submodules \
+  https://github.com/NoCoder0/aicpu-cpu-hcomm-demo.git
+cd aicpu-cpu-hcomm-demo
+git submodule status
+# 应为 33d156bf...；不要使用 submodule update --remote 漂移到其他版本。
+```
 
-## 记录
+LFS 跳过的是上游文档图片等资料，demo 不依赖它们；构建依赖按上游脚本下载，需要相应网络或缓存。
+已有检出目录更新时使用 `git pull --ff-only` 后执行 `GIT_LFS_SKIP_SMUDGE=1 git submodule update --init --recursive`。
 
-`evidence/` 保存本次只读查询的原始输出和命令。密码不写入工作区。
+### 3. 分别构建与部署
+
+```bash
+# Host3 容器，仓库根目录
+set -o pipefail
+mkdir -p build
+bash build.sh host 2>&1 | tee build/hcomm.log
+bash deploy.sh host 2>&1 | tee build/deploy.log
+
+# A3 容器，仓库根目录
+set -o pipefail
+mkdir -p build
+bash build.sh a3 2>&1 | tee build/hcomm.log
+bash deploy.sh a3 2>&1 | tee build/deploy.log
+```
+
+每条命令必须退出0后继续。Host 构建 `--pkg --experimental`；A3 额外 `--full`。
+均使用 Debug 构建以提供此分支 experimental 插件需要的动态符号。
+部署时只去除调试段；A3 用户 kernel 与同次构建的设备库一起打包，重建 `bin_hash.cfg`。
+部署清单为 `build/deployed_libraries.json`，hcomm 构建退出码为 `build/hcomm.exit`。
+
+### 4. 先 Host、后 A3，在两个终端运行
+
+```bash
+# Host3 容器，仓库根目录。等待输出 Control listening 后启动 A3。
+set -o pipefail
+bash run.sh host 2>&1 | tee build/host.log
+rc=${PIPESTATUS[0]}; echo "$rc" > build/host.exit; test "$rc" -eq 0
+
+# A3 容器，仓库根目录
+set -o pipefail
+bash run.sh a3 2>&1 | tee build/a3.log
+rc=${PIPESTATUS[0]}; echo "$rc" > build/a3.exit; test "$rc" -eq 0
+```
+
+程序总超时300秒，建链超时120秒。需同时满足：
+
+- 双方 Channel 状态 READY（日志 `CHANNEL status=0`）。
+- A3 的 BatchStart、Read、Drain、BatchEnd 以及 ACL 同步返回0。
+- A3 输出 `PASS: standard HcommReadOnThread HBM='hello rdma demo', bytes=16, guards=4080 unchanged`。
+- Host 输出 `PASS: NPU confirmed standard HCOMM READ and HBM validation`。
+- 双方清理完成，两个退出码文件均为0；不能仅凭 READ 返回0判断传输成功。
+
+### 5. Host3 容器兼容回归
+
+```bash
+source /usr/local/Ascend/cann-9.1.0/set_env.sh
+python3 tests/run.py
+python3 tests/run.py --plugin
+```
+
+第一条3项测试覆盖 MR 描述符和 socket tag，第二条2项覆盖资源报文格式及非法输入。
+测试不发起 RDMA，不能替代上面的双节点 HBM 实测。
+
+## hcomm 兼容修改范围
+
+修复 Host MR 描述符导入、两端 socket tag、Host RA 动态符号/白名单初始化，以及 A3/Host
+资源通道的109字节 Drain 报文匹配。公开接口和 READ 数据原语未修改；应用不调用 RA/verbs。
+Host 资源模式限定为1 QP、0用户 notify。不支持的资源形状明确返回错误。
