@@ -3,13 +3,11 @@
 #include "common.h"
 #include <dlfcn.h>
 
-int main(int argc, char **argv)
+int main()
 {
     setvbuf(stdout, nullptr, _IONBF, 0);
     alarm(300);
     try {
-        const bool probeOnly = argc == 2 && std::string(argv[1]) == "--probe-endpoint";
-        Require(argc == 1 || probeOnly, "usage: host_server [--probe-endpoint]");
         // 记录实际加载库，排查新头文件误配旧 hcomm 库的情况。
         Dl_info library{};
         void *symbol = dlsym(RTLD_DEFAULT, "HcommEndpointCreate");
@@ -19,12 +17,6 @@ int main(int argc, char **argv)
         EndpointDesc desc = MakeEndpoint(false);
         EndpointHandle endpoint = nullptr;
         CHECK_API(HcommEndpointCreate(&desc, &endpoint));
-        if (probeOnly) {
-            CHECK_API(HcommEndpointDestroy(endpoint));
-            puts("ENDPOINT PROBE ONLY: success does not prove channel or RDMA READ support");
-            return 0;
-        }
-
         Stage("2. 分配并注册 Host DRAM，填入唯一被测字符串");
         void *dram = nullptr;
         Require(posix_memalign(&dram, BUFFER_BYTES, BUFFER_BYTES) == 0, "allocate Host DRAM");

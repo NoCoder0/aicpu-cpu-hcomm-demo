@@ -114,6 +114,17 @@ git submodule status
 LFS 跳过的是上游文档图片等资料，demo 不依赖它们；构建依赖按上游脚本下载，需要相应网络或缓存。
 已有检出目录更新时使用 `git pull --ff-only` 后执行 `GIT_LFS_SKIP_SMUDGE=1 git submodule update --init --recursive`。
 
+本次现场回归复用各容器已有的第三方依赖缓存（不复制 hcomm 的 `build/` 或 `build_out/`）：
+
+```bash
+# 两端容器，新仓库根目录；仅当此旧缓存存在时使用。
+mkdir -p reference/hcomm/third_party
+cp -a /workspace/nocoder/source/third_party/. reference/hcomm/third_party/
+export JOBS=32
+```
+
+没有该缓存时需按 hcomm 构建说明准备第三方依赖及下载网络；不能将旧编译产物当作本次回归结果。
+
 ### 3. 分别构建与部署
 
 ```bash

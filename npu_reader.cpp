@@ -117,9 +117,7 @@ int main(int argc, char **argv)
     setvbuf(stdout, nullptr, _IONBF, 0);
     alarm(300); // 最终超时退出进程，失败时不提前释放可能仍被 DMA 引用的 MR。
     try {
-        const bool probeOnly = argc == 2 && std::string(argv[1]) == "--probe-endpoint";
-        const bool probeThread = argc == 2 && std::string(argv[1]) == "--probe-thread";
-        Require(argc == 2, "usage: npu_reader <standard_read.json> | --probe-endpoint | --probe-thread");
+        Require(argc == 2, "usage: npu_reader <standard_read.json>");
         VerifyLibrary();
         Stage("1. 初始化 ACL，选择 NPU2，创建 DEVICE/ROCE Endpoint");
         CHECK_API(aclInit(nullptr));
@@ -131,23 +129,6 @@ int main(int argc, char **argv)
         EndpointHandle endpoint = nullptr;
         // 这是卡侧网络资源入口，由本仓固定的 hcomm 版本提供 DEVICE/ROCE 实现。
         CHECK_API(HcommEndpointCreate(&local, &endpoint));
-        if (probeOnly || probeThread) {
-            if (probeThread) {
-                // 单独核验标准 AICPU_TS 线程及配套设备 kernel 的实际加载。
-                // 没有 Channel，也没有发 READ；此探测不能输出端到端 PASS。
-                ThreadHandle thread = 0;
-                uint32_t notifyCount = 1;
-                CHECK_API(HcommThreadAlloc(COMM_ENGINE_AICPU_TS, 1, &notifyCount, &thread));
-                CHECK_API(aclrtSynchronizeDevice());
-                CHECK_API(HcommThreadFree(&thread, 1));
-            }
-            CHECK_API(HcommEndpointDestroy(endpoint));
-            CHECK_API(aclrtResetDevice(NPU_DEVICE_ID));
-            CHECK_API(aclFinalize());
-            puts("RESOURCE PROBE ONLY: success does not prove channel or RDMA READ support");
-            return 0;
-        }
-
         Stage("2. 分配 HBM，使用 HcommMemReg/Export 注册并导出内存");
         void *hbm = nullptr;
         CHECK_API(aclrtMalloc(&hbm, BUFFER_BYTES, ACL_MEM_MALLOC_NORMAL_ONLY));

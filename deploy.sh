@@ -7,7 +7,6 @@ export CANN=${CANN:-/usr/local/Ascend/cann-9.1.0}
 source "$CANN/set_env.sh"
 case "$role" in host|a3) ;; *) echo "Invalid role: $role" >&2; exit 2;; esac
 mkdir -p build
-export DEMO_ROLE=$role
 python3 - <<'PY'
 from pathlib import Path
 import hashlib, json, os, shutil, subprocess
