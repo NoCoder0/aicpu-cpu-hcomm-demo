@@ -1,8 +1,10 @@
 # Host DRAM → NPU HBM：最小 RDMA SGL Demo 可行性
 
-**当前分支：`feature/standard-hcomm-host-to-hbm`。标准 Hcomm 接口代码已编写，
-语法检查和 AICPU 用户 kernel 链接通过；因现场 CANN 9.0.0 与较新上游不兼容，尚未实机跑通。**
+**当前分支：`feature/standard-hcomm-host-to-hbm`。已从 hhy 复制独立 CANN 9.1 容器，
+完成 hcomm 全量构建、demo 编译和 NPU Endpoint 实测。Host4 的标准 RoCE 插件加载成功，
+但底层 HCCP 仍要求查询 NPU 逻辑设备号，导致无卡 Host 初始化失败；标准 READ 尚未跑通。**
 审阅入口：[标准接口代码与建链说明](standard_hcomm/README.md)。
+环境、兼容改动和运行证据：[独立容器记录](standard_hcomm/CONTAINER_RUN.md)。
 
 **上一分支结果：含自定义 READ 扩展的完整 hcomm 源码构建版于 2026-09-20 23:24 实机通过。**
 见 [完整 hcomm 说明](full_hcomm/README.md) 和 [本版实测报告](full_hcomm/RESULT.md)。

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")"
-CANN=${CANN:-/usr/local/Ascend/cann-9.0.0}
+CANN=${CANN:-/usr/local/Ascend/cann-9.1.0}
 HCOMM_SOURCE=${HCOMM_SOURCE:-$PWD/source}
 # 只验证公开头文件/语法，不等同于链接成功、设备 kernel 打包成功或实机通过。
 flags=(-std=c++14 -Wall -Wextra -Werror -fsyntax-only

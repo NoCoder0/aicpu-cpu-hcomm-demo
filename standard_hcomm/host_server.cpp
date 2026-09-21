@@ -1,16 +1,29 @@
 // 鲲鹏无卡端：标准 HCOMM HOST/ROCE Endpoint + 上游 host-only NIC 插件。
 // 与旧版 host_server.c 的区别：应用不再调用 ibv_create_qp/modify_qp/reg_mr。
 #include "common.h"
+#include <dlfcn.h>
 
-int main()
+int main(int argc, char **argv)
 {
     setvbuf(stdout, nullptr, _IONBF, 0);
     alarm(300);
     try {
+        const bool probeOnly = argc == 2 && std::string(argv[1]) == "--probe-endpoint";
+        Require(argc == 1 || probeOnly, "usage: host_server [--probe-endpoint]");
+        // 记录实际加载库，排查新头文件误配旧 hcomm 库的情况。
+        Dl_info library{};
+        void *symbol = dlsym(RTLD_DEFAULT, "HcommEndpointCreate");
+        Require(symbol != nullptr && dladdr(symbol, &library) != 0, "resolve HCOMM library");
+        printf("LIBRARY HcommEndpointCreate => %s\n", library.dli_fname);
         Stage("1. 创建 HOST/ROCE Endpoint，hcomm 插件管理 mlx5 网络资源");
         EndpointDesc desc = MakeEndpoint(false);
         EndpointHandle endpoint = nullptr;
         CHECK_API(HcommEndpointCreate(&desc, &endpoint));
+        if (probeOnly) {
+            CHECK_API(HcommEndpointDestroy(endpoint));
+            puts("ENDPOINT PROBE ONLY: success does not prove channel or RDMA READ support");
+            return 0;
+        }
 
         Stage("2. 分配并注册 Host DRAM，填入唯一被测字符串");
         void *dram = nullptr;

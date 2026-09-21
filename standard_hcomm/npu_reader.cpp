@@ -1,7 +1,7 @@
 // 审阅入口：同一文件包含两种编译目标，避免把标准 READ 藏在另一个封装库中。
 // STANDARD_HCOMM_AICPU：下面的 StandardReadKernel 在 AICPU 上执行。
 // 默认：main 在 A3 宿主机上执行，用标准 Hcomm* 外部接口创建通信资源。
-// 本版是待实机验证的标准接口实现；当前全量构建受 CANN 9.0.0 兼容性阻塞。
+// 本版在独立 CANN 9.1 容器构建；实际验证状态见 CONTAINER_RUN.md。
 #include <hcomm_primitives.h>
 #include <cstdint>
 
@@ -108,7 +108,8 @@ int main(int argc, char **argv)
     alarm(300); // 最终超时退出进程，失败时不提前释放可能仍被 DMA 引用的 MR。
     try {
         const bool probeOnly = argc == 2 && std::string(argv[1]) == "--probe-endpoint";
-        Require(probeOnly || argc == 2, "usage: npu_reader <standard_read.json> | --probe-endpoint");
+        const bool probeThread = argc == 2 && std::string(argv[1]) == "--probe-thread";
+        Require(argc == 2, "usage: npu_reader <standard_read.json> | --probe-endpoint | --probe-thread");
         VerifyLibrary();
         Stage("1. 初始化 ACL，选择 NPU0，创建 DEVICE/ROCE Endpoint");
         CHECK_API(aclInit(nullptr));
@@ -120,11 +121,22 @@ int main(int argc, char **argv)
         EndpointHandle endpoint = nullptr;
         // 这是卡侧网络资源入口。上游 v9.0.0 在这里拒绝 DEVICE + ROCE。
         CHECK_API(HcommEndpointCreate(&local, &endpoint));
-        if (probeOnly) {
+        if (probeOnly || probeThread) {
+            if (probeThread) {
+                // 单独核验标准 AICPU_TS 线程及配套设备 kernel 的实际加载。
+                // 没有 Channel，也没有发 READ；此探测不能输出端到端 PASS。
+                ThreadHandle thread = 0;
+                uint32_t notifyCount = 1;
+                CHECK_API(HcommThreadAlloc(COMM_ENGINE_AICPU_TS, 1, &notifyCount, &thread));
+                void *stream = nullptr;
+                CHECK_API(HcommThreadResGetInfo(thread, THREAD_RES_TYPE_STREAM, sizeof(void *), &stream));
+                Require(stream != nullptr, "communication stream");
+                CHECK_API(HcommThreadFree(&thread, 1));
+            }
             CHECK_API(HcommEndpointDestroy(endpoint));
             CHECK_API(aclrtResetDevice(0));
             CHECK_API(aclFinalize());
-            puts("ENDPOINT PROBE ONLY: success does not prove channel or RDMA READ support");
+            puts("RESOURCE PROBE ONLY: success does not prove channel or RDMA READ support");
             return 0;
         }
 

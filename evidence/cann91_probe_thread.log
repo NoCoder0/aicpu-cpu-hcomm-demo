@@ -1,0 +1,15 @@
+LIBRARY HcommEndpointCreate => /usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so
+
+STAGE 1. 初始化 ACL，选择 NPU0，创建 DEVICE/ROCE Endpoint
+API aclInit(nullptr) => 0
+API aclrtSetDevice(0) => 0
+API aclrtGetPhyDevIdByLogicDevId(0, &physicalId) => 0
+API EndpointDescInit(&desc, 1) => 0
+API HcommEndpointCreate(&local, &endpoint) => 0
+API HcommThreadAlloc(COMM_ENGINE_AICPU_TS, 1, &notifyCount, &thread) => 0
+API HcommThreadResGetInfo(thread, THREAD_RES_TYPE_STREAM, sizeof(void *), &stream) => 0
+API HcommThreadFree(&thread, 1) => 0
+API HcommEndpointDestroy(endpoint) => 0
+API aclrtResetDevice(0) => 0
+API aclFinalize() => 0
+RESOURCE PROBE ONLY: success does not prove channel or RDMA READ support

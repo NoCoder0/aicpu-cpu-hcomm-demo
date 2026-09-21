@@ -1,0 +1,5 @@
+{
+  "stdout": "644e8a1c94f2cec5d247a95d8f0348cb05fa2b6307696582f726e32e8c031855 sha256:5b234a7c453605fc3e4358ad0b778f365fea8b52865429ff068d6876e67d3382 running host\nLIBRARY /usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so\naclInit rc=0\naclrtSetDevice(0) rc=0\n[DlRaFunctionInit] called, handle_=(nil)\n[DlRaFunctionInit] called, handle_=0xfffed99e6380\nHcommEndpointCreate(DEVICE, ROCE, 20.168.0.1) rc=0\nHcommEndpointDestroy rc=0\naclrtResetDevice rc=0, aclFinalize rc=0\nEndpoint-only probe: this is NOT a successful RDMA READ test.\n\tNPU ID                         : 0\n\tChip Count                     : 2\n\n\tCustom-op-secverify-mode       : 0\n\tChip ID                        : 0\n\n\tCustom-op-secverify-mode       : 0\n\tChip ID                        : 1\n\n",
+  "stderr": "",
+  "exit": 0
+}

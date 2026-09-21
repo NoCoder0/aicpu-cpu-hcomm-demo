@@ -1,12 +1,15 @@
-# 标准 HCOMM 接口版：代码可审阅，端到端验证受 SDK 版本阻塞
+# 标准 HCOMM 接口版：已构建并实测，Host-only HCCP 初始化阻塞
 
 2026-09-21。本版应用只通过公开 `Hcomm*` 接口管理通信资源及提交 READ；
 没有调用上一版的 `HcclReadByAscendQP`，没有直接调用 RA、Runtime RDMA doorbell 或 libibverbs。
 **尚未实机跑通，不能用上一版的 PASS 作为本版成功证据。**
 
 分支：`feature/standard-hcomm-host-to-hbm`。hcomm 子模块分支：
-`demo/standard-hcomm-host-to-hbm`，固定于未修改的上游提交
-`fd1ef8d1e71446a8891aae71dbed2deda57d936f`。
+`demo/standard-hcomm-host-to-hbm`，当前为 `5843761d`，基于上游
+`fd1ef8d1e71446a8891aae71dbed2deda57d936f` 加三处 CANN 9.1 兼容改动。
+公开 Hcomm 接口、READ 实现和 Channel 建链实现没有修改。
+已从 `hhy` 快照创建独立容器 `rdma-hcomm-cann91`，完成 Debug 全量构建及运行探测。
+复现入口与当前阻塞见 [CONTAINER_RUN.md](CONTAINER_RUN.md)。
 先前已验证的扩展 READ 版本在 `feature/full-hcomm-host-to-hbm` / `e5452f1`，需切回该分支复现。
 
 ## 先看这些代码
@@ -67,10 +70,11 @@ READY                                      READY
 
 `HcommThreadAlloc(AICPU_TS)` 返回设备侧线程句柄，不能拿到宿主机中当普通指针调用数据面 API。
 本版用标准 `HcommThreadResGetInfo` 取得对应的通信 stream，在 kernel 提交结束后同步该 stream。
-`standard_read.json` 给出用户 kernel 的函数描述；用户 DSO、依赖的同版本设备库、包布局和签名/装载
-仍需在匹配环境中完成验证，仅把 `.so` 与 `.json` 放在同一目录不能视为已部署。
+`standard_read.json` 给出用户 kernel 的函数描述。`deploy_in_container.sh` 将用户 DSO 加入
+同版 `aicpu_hcomm.tar.gz`，保留动态符号、去掉调试段，并重算 `bin_hash.cfg`。
+设备包实际加载已通过；自定义 READ kernel 的执行仍需先完成两端 Channel 建链。
 
-## 已完成的验证
+## CANN 9.0 阶段的历史验证
 
 | 检查 | 结果 | 证据 |
 |---|---|---|
@@ -83,7 +87,7 @@ READY                                      READY
 共享库符号表中 READ/Drain 显示 `UND` 是 DSO 的动态依赖引用；这里没有定义同名替代函数。
 链接成功不证明设备动态装载、通信或数据正确。
 
-## 当前阻塞与继续方式
+## CANN 9.0 阶段的历史阻塞
 
 旧 v9.0.0 源码的 Endpoint 工厂只对 `HOST + ROCE` 创建 CpuRoceEndpoint，没有 `DEVICE + ROCE` 分支。
 现场标准 API 探测与这一限制一致。较新上游提供卡侧 RoCE 和 Host-only 插件，但用现场 CANN 9.0.0
@@ -98,21 +102,24 @@ error: 'RES_ADDR_TYPE_NDA_URMA_DB' undeclared
 因此没有通过修改枚举数值、混装新旧库或绕回 RA 来制造成功结果。
 部分设备目标（含 libccl_kernel.so）可构建，足以完成用户 kernel 链接检查，但不能替代完整运行环境。
 
-下一步需要提供与上述 hcomm 提交配套的 CANN Toolkit 和运行包路径。
-主机库、Host-only 插件和 AICPU 设备库必须配套；Host4 当前没有 CANN 安装，也需要部署对应主机依赖。
-不能仅依据一个版本号假定兼容，需重新完整构建、检查实际加载路径，并继续两端验证。
+上述构建阻塞已在独立 CANN 9.1 容器中通过显式兼容改动解决。
+当前 Host4 已部署同次构建的库、插件及真实运行时依赖，但其 Endpoint 初始化被底层
+`RsGetChipLogicId → DlDrvDeviceGetIndexByPhyId` 阻塞。没有使用 HAL stub 伪造设备查询成功。
+这不是应用控制 TCP 或 QP 建链超时：执行尚未到达 Channel 创建。
 
-远端目录：`/data1/z00502111/rdma_sgl_host_to_hbm/standard_hcomm`。
-该目录保存完整源码、代码、构建脚本和 `build.log`。环境匹配后：
+旧 CANN 9.0 构建目录仍保留在 `/data1/z00502111/rdma_sgl_host_to_hbm/standard_hcomm`。
+当前目录是相邻的 `standard_hcomm_cann91`，在新容器内映射为 `/workspace`：
 
 ```bash
-# A3：先构建 hcomm；CANN 指向配套 SDK，不覆盖系统目录。
-CANN=/path/to/matching/cann bash build_hcomm.sh
-# 明确指定匹配的设备库目录，再编译 demo；路径缺失会直接失败。
-CANN=/path/to/matching/cann HCOMM_DEVICE_LIB=/path/to/device/lib bash build_demo.sh
+docker exec -it rdma-hcomm-cann91 bash
+cd /workspace
+bash build_in_container.sh
+# 修改的 Toolkit 位于本容器独立可写层；不在 hhy 或宿主机执行此部署脚本。
+bash deploy_in_container.sh
+bash run_npu.sh --probe-endpoint
 ```
 
-待配套设备 kernel 装载流程完成并核验后，先在 Host4 启动 `host_server`，
+待 Host-only HCCP 初始化问题解决后，先在 Host4 启动 `host_server`，
 再在 A3 启动 `npu_reader /absolute/path/to/standard_read.json`。
 成功标准仍为16字节精确匹配、4080字节哨兵不变、两端退出码0。
 
