@@ -1,0 +1,86 @@
+[
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend950/libccl_dpu.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libccl_dpu.so",
+    "source_sha256": "421d783069f414822fd106bfaabcb8cdc7aa2fff68c105a32c5d50f1979dd58a",
+    "deployed_sha256": "4884bc438db82b3e7b6feb55fe203c45ebf0c94a21a245ce7ae7527b7ef446b3",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend950/libhccl_v2.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libhccl_v2.so",
+    "source_sha256": "5960aba0bd75e02cb13beadeef8420029eb8773b01a1a13542ece63ec59a3db0",
+    "deployed_sha256": "5152d342a60e7b6f42387829fcadacd2203fe7db61316207c9efefdf5b75aa2f",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend910/framework/libhcomm.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so",
+    "source_sha256": "401170420e4858967fbd88883d636bb1209a38d66084125960fde5a5fcab32e9",
+    "deployed_sha256": "4083b325264a63d0b0c1c4355cca742c0213b3b6959269a547b6d6657657bdfa",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend910/algorithm/libhccl_alg.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libhccl_alg.so",
+    "source_sha256": "eba6c7f4cadead214d6d7fc0e264b1b7d4305f4970a2b3b3ef5dc19a6573f333",
+    "deployed_sha256": "3b332dae63b27164d6468a324538f2739cc846f0de473111ed6564f81c065212",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend910/platform/libhccl_plf.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libhccl_plf.so",
+    "source_sha256": "306432502fc3727ccb5759478d4e1c43319bee6484464c947b96332a95e4bd13",
+    "deployed_sha256": "fe5581fd867aba3e8978ab1639e6aea23b587fae8db7cdbdf583739d1aab4158",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/legacy/ascend950/framework/topo/topo_addr_info/libtopoaddrinfo.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libtopoaddrinfo.so",
+    "source_sha256": "200f4e430d705c700e6e93161923a44180c2aaa15a49d9c4893c03c6aa6cd50d",
+    "deployed_sha256": "95b6dea940ec68d59ad6b151ea9671428bd55680fff8b1eee8017f2f44c31caa",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/base_comm/resources/hccp/rdma_service/librs.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/librs.so",
+    "source_sha256": "b292cf24b10a9fd6f30c92c12da946de1d55dd61fac59c3eec9f71b293e6032a",
+    "deployed_sha256": "c371a312c60b7a23e23ab5936c260d150b41a5a60ba75b5d929c10aa569fdacf",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/base_comm/resources/hccp/rdma_agent/peer/libra_peer.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libra_peer.so",
+    "source_sha256": "d4700a6ed5c257cd04da3236ed27ff63ba43eb3b4fb2df4b2622e03d25becdad",
+    "deployed_sha256": "65218cfe1d2ed72191be781cfedd1d93e3a9fb8e837c8ed95d78f6768335892d",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/base_comm/resources/hccp/rdma_agent/hdc/libra_hdc.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libra_hdc.so",
+    "source_sha256": "2c247a00cfbb50c299f3d56e3c3797256563963d137e905bc0c8d6efcb59c8ad",
+    "deployed_sha256": "bba3349a091c07ab6cde078fff8d8fb977ed43e2d68da18f172940005fba5c2d",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/src/base_comm/resources/hccp/rdma_agent/client/libra.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/lib64/libra.so",
+    "source_sha256": "3201ad05b835be82b9ebaead802ac70f0be7081b4d8bcdc58d44ac451af0a69c",
+    "deployed_sha256": "14c249afccc5629b474995a53edcf004b33a1ee1ff93faf5de19a5d28f843edb",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/experimental/base_comm/nic_plugin/libhcomm_cpu_ub_plugin.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/hcomm_plugin/libhcomm_cpu_ub_plugin.so",
+    "source_sha256": "fdb307ce67041e655253ae21833c3b6567d4ba1a0824c0fd2a02e19c59baf763",
+    "deployed_sha256": "dd6ca5b29f17a31b1e4de464bde4d89585d3bd1e251d870803c08e009d619905",
+    "transformation": "strip debug sections only"
+  },
+  {
+    "source": "/workspace/nocoder/source/build/experimental/base_comm/nic_plugin/libhcomm_cpu_roce_plugin.so",
+    "destination": "/usr/local/Ascend/cann-9.1.0/hcomm_plugin/libhcomm_cpu_roce_plugin.so",
+    "source_sha256": "c1fda01ff20e36914e56295c3be5278dd83dc0dbde9ec9d68b2847fb93d1d800",
+    "deployed_sha256": "239e23dc96f436d85eff1557c3f7814710559055fcbe0e9f27104d37acaf7e04",
+    "transformation": "strip debug sections only"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "upstream": "64ef7f9e05964add831d976876ce54adb74cd286",
+  "hcomm_fix": "33d156bf832744a4f767144149ed1b2e304ff2e3",
+  "npu_device": 2,
+  "npu_rdma_ip": "20.168.0.3",
+  "host": "10.1.101.27",
+  "host_rdma_ip": "20.168.0.19",
+  "bytes": 16,
+  "unchanged_guard_bytes": 4080,
+  "single_wr_multi_sge_validated": false,
+  "a3_exit": 0,
+  "host3_exit": 0,
+  "api_results": [
+    "API args.batchStartResult => 0",
+    "API args.readResult => 0",
+    "API args.drainResult => 0",
+    "API args.batchEndResult => 0",
+    "HBM first 16 bytes: 68 65 6c 6c 6f 20 72 64 6d 61 20 64 65 6d 6f 00",
+    "PASS: standard HcommReadOnThread HBM='hello rdma demo', bytes=16, guards=4080 unchanged"
+  ],
+  "logs": {
+    "a3_run_a3_batch2.log": "2306ddcd94b295eb48c1420281351b45ce112a5eef9038324c03c64f8d9530d4",
+    "host3_run_host3_batch2.log": "cf31effc19e1d722d1776c4421f0ac5a0617031c3b972a698bb32ae233013a5d"
+  },
+  "final_repeat": {
+    "host3": {
+      "exit": 0,
+      "log": "host3_final_run_host3_final2.log",
+      "sha256": "657b12d603acc89db8546ff769cdce2cf56ba2ea04abcba145be2a5223280d28",
+      "pass_lines": [
+        "PASS: NPU confirmed standard HCOMM READ and HBM validation"
+      ]
+    },
+    "a3": {
+      "exit": 0,
+      "log": "a3_final_run_a3_final2.log",
+      "sha256": "6cec20004c9fd886e6559e1a546d96096a76ae5b6215d3128d4ed9c4684c8f3c",
+      "pass_lines": [
+        "API args.batchStartResult => 0",
+        "API args.readResult => 0",
+        "API args.drainResult => 0",
+        "API args.batchEndResult => 0",
+        "HBM first 16 bytes: 68 65 6c 6c 6f 20 72 64 6d 61 20 64 65 6d 6f 00",
+        "PASS: standard HcommReadOnThread HBM='hello rdma demo', bytes=16, guards=4080 unchanged"
+      ]
+    }
+  },
+  "tests": {
+    "descriptor_and_tag": 3,
+    "resource_wire": 2,
+    "failed": 0
+  }
+}

@@ -1,0 +1,19 @@
+[  1%] Built target rdma_core_patch
+[  2%] Built target openssl_project
+[  2%] Built target hcomm_utils
+[  3%] Built target third_party_json
+[  3%] Built target topoaddrinfo
+[  3%] Built target ccl_dpu
+[  3%] Built target rdma_core_src
+[  3%] Built target rdma_core_build
+[  4%] Built target ra_hdc
+[  6%] Built target rs
+[  7%] Built target ra_peer
+[  8%] Built target ra
+[ 15%] Built target hccl_plf
+[ 41%] Built target hccl_alg
+[ 81%] Built target hccl_v2
+[100%] Built target hcomm
+[100%] Building CXX object experimental/base_comm/nic_plugin/CMakeFiles/hcomm_cpu_roce_plugin.dir/__/channel/host_cpu_roce_channel.cc.o
+[100%] Linking CXX shared library libhcomm_cpu_roce_plugin.so
+[100%] Built target hcomm_cpu_roce_plugin

@@ -1,0 +1,723 @@
+[INFO] ATRACE(23553,host_server):2026-09-21-11:29:17.950.644 [trace_core.c:31](tid:23553) atrace is not supported, init nothing.
+[INFO] ATRACE(23553,host_server):2026-09-21-11:29:17.950.684 [awatchdog_core.c:99](tid:23553) watchdog get platform host side
+[INFO] ATRACE(23553,host_server):2026-09-21-11:29:17.950.796 [awatchdog_monitor.c:127](tid:23553) create monitor thread successfully, tid :281473686078464 
+[INFO] ATRACE(23553,host_server):2026-09-21-11:29:17.950.800 [awatchdog_monitor.c:225](tid:23553) AwdMonitorInit
+[WARNING] RUNTIME(23553,host_server):2026-09-21-11:29:17.950.955 [runtime_keeper.cc:258] 23553 RegisterDrvErrMsgHandle: [drv api] drv_log_report_err_msg_handle_register does not exist, skip register err msg handle.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.950.959 [task_fail_callback_data_manager.cc:93] 23553 TaskFailCallBackManager: Constructor.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.950.961 [xpu_task_fail_callback_data_manager.cc:59] 23553 XpuTaskFailCallBackManager: XpuTaskFailCallBackManager Constructor.
+[INFO] IDEDD(23553,host_server):2026-09-21-11:29:17.951.269 [dump_config_converter.cpp:1153][tid:23553] No Env enable exception dump
+[INFO] TDT(23553,host_server):2026-09-21-11:29:17.952.121 [package_worker_factory.cpp:38][RegisterPackageWorkerCreator][tid:23553] Register[2] package worker was created successfully
+[INFO] TDT(23553,host_server):2026-09-21-11:29:17.952.130 [package_worker_factory.cpp:38][RegisterPackageWorkerCreator][tid:23553] Register[3] package worker was created successfully
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.956.871 [global_mirror_tasks.cc:19][23553][GlobalMirrorTasks][GlobalMirrorTasks]GlobalMirrorTasks Contruct
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.963.773 [adapter_rts.cc:2585] [23553][adapter_rts.cc][CallBackInitRts] g_deviceType [8] g_deviceLogicId [-1] g_devicePhyId [-1]
+[INFO] GE(23553,host_server):2026-09-21-11:29:17.980.345 [error_manager.cc:1047]23553 RegisterFormatErrorMessage:RegisterFormatErrorMessage, try to register error message
+LIBRARY HcommEndpointCreate => /usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so
+
+STAGE 1. 创建 HOST/ROCE Endpoint，hcomm 插件管理 mlx5 网络资源
+API EndpointDescInit(&desc, 1) => 0
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:17.989.033 [hcomm_adapter_runtime.cc:33] [23553][HcommAdapterRuntime][ResolveRuntimeDevicePhyId] force Host-only resource id[0], env[HCOMM_FORCE_HOST_NIC_PLUGIN]=1, test only.
+[INFO] ASCENDCL(23553,host_server):2026-09-21-11:29:17.989.165 [device.cpp:216]23553 aclrtGetDeviceCountImpl: start to execute aclrtGetDeviceCount
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.989.176 [runtime_keeper.cc:98] 23553 GetDeviceType: hardwareVersion=0xffffffffffffffff
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.025 [plugin_old_arch.cc:21] 23553 ConstructRuntimeImpl: RuntimeImpl construct success, runtime = 0xaaaaf03d2770
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.034 [runtime_keeper.cc:211] 23553 CreateRuntimeImpl: Open libruntime_v100.so successfully
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.036 [runtime_keeper.cc:331] 23553 BootRuntime: new Runtime ok, Runtime_alloc_size 13920.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.042 [runtime.cc:1081] 23553 CheckHaveDevice: hardwareVersion=0xffffffffffffffff
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.053 [runtime.cc:810] 23553 InitChipTypeAndSocVersion: Runtime init: device type=0, soc version=, have device=0
+[WARNING] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.058 [ini_parse_utils.cc:136] 23553 ParseIniFile: socVersion is empty, skip ini parse.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.065 [runtime.cc:822] 23553 InitApiImplies: ApiImpl:Runtime_alloc_size 16
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.067 [runtime.cc:830] 23553 InitApiImplies: ApiImplMbuf:Runtime_alloc_size 8
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.068 [runtime.cc:838] 23553 InitApiImplies: ApiImplSoma:Runtime_alloc_size 8
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.070 [runtime.cc:849] 23553 InitLogger: Logger:Runtime_alloc_size 32
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.081 [runtime.cc:860] 23553 InitApiProfiler: RProfiler:Runtime_alloc_size 176
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.088 [profiler.cc:88] 23553 Init: Init ok, Runtime_alloc_size 48
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.091 [runtime.cc:877] 23553 InitApiErrorDecorator: ApiErrorDecorator:Runtime_alloc_size 16.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.093 [runtime.cc:888] 23553 InitThreadGuard: Runtime init:new ThreadGuard ok, Runtime_alloc_size 104.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.095 [runtime.cc:900] 23553 InitStreamObserver: EngineStreamObserver:Runtime_alloc_size 8.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.096 [runtime.cc:913] 23553 InitAicpuStreamIdBitmap: Bitmap(1024):Runtime_alloc_size 80.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.098 [runtime.cc:931] 23553 InitCbSubscribe: The thread group num is 128
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.100 [runtime.cc:938] 23553 InitCbSubscribe: Runtime init:new CbSubscribe ok, Runtime_alloc_size 320.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.120 [runtime.cc:115] 23553 Init: ObjAllocator alloc success, Runtime_alloc_size 1920(bytes)
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.124 [runtime.cc:127] 23553 Init: ObjAllocator alloc success, Runtime_alloc_size 11520(bytes)
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.161 [runtime.cc:1011] 23553 InitLabelAllocator: Runtime init:new LabelAllocator ok, Runtime_alloc_size 131152.
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.163 [runtime.cc:1019] 23553 InitSetRuntimeVersion: set runtime api ver success
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.166 [runtime.cc:1032] 23553 InitNpuCollectPath: NPU_COLLECT_PATH is not set!
+[INFO] RUNTIME(23553,host_server):2026-09-21-11:29:17.990.184 [runtime.cc:1195] 23553 FindDcacheLockOp: Dcache lock feature is not supported on chip type=0.
+[INFO] PROFILING(23553,host_server):2026-09-21-11:29:17.990.187 [prof_cann_plugin.cpp:390] (tid:23553) Register module[RUNTIME(7)] callback.
+[INFO] ASCENDCL(23553,host_server):2026-09-21-11:29:17.990.194 [device.cpp:220]23553 aclrtGetDeviceCountImpl: successfully execute aclrtGetDeviceCount, get device count is 0.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.990.813 [nic_plugin_manager.cc:110] [23553][NicPlugin] protocol[1] is handled by plugin[hcomm_cpu_roce].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.314 [nic_plugin_manager.cc:110] [23553][NicPlugin] protocol[5] is handled by plugin[hcomm_cpu_ub].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.319 [nic_plugin_manager.cc:110] [23553][NicPlugin] protocol[4] is handled by plugin[hcomm_cpu_ub].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.324 [cpu_roce_endpoint.cc:49] [23553][Init] localEndpoint protocol[1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.331 [orion_adapter_hccp.cc:737][23553][HrtRaSocketSetWhiteListStatus] Input params: enable=1
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.337 [ra_host.c:1558]tid:23553,RaSocketSetWhiteListStatus : Input parameters: enable[1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.342 [orion_adapter_hccp.cc:744][23553]set host socket whitelist status[1] success.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.347 [orion_adapter_hccp.cc:198][23553][Init][Ra] Input params: phyId=[0], mode=[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.370 [base_config.cc:21][23553][HCCL_ENV] HCCL_IF_IP set by default to [IpAddress[0000:0000:0000:0000:0000:0000:0000:0000, AF=IPv4, addr=0.0.0.0]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.373 [base_config.cc:25][23553][HCCL_ENV] HCCL_IF_BASE_PORT set by default to [65536]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.376 [base_config.cc:29][23553][HCCL_ENV] HCCL_SOCKET_IFNAME set by default to []
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.382 [base_config.cc:33][23553][HCCL_ENV] HCCL_WHITELIST_DISABLE set by environment to [0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.384 [base_config.cc:38][23553][HCCL_ENV] HCCL_WHITELIST_FILE set by default to []
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.389 [base_config.cc:47][23553][HCCL_ENV] HCCL_HOST_SOCKET_PORT_RANGE set by default to 
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.391 [base_config.cc:55][23553][HCCL_ENV] HCCL_NPU_SOCKET_PORT_RANGE set by default to 
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.394 [base_config.cc:99][23553][HCCL_ENV] HCCL_SOCKET_FAMILY set by default to [-1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.399 [base_config.cc:103][23553][HCCL_ENV] HCCL_CONNECT_TIMEOUT set by environment to [120]s
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.402 [base_config.cc:123][23553][HCCL_ENV] HCCL_EXEC_TIMEOUT set by default to [1836]s
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.404 [base_config.cc:142][23553][HCCL_ENV] HCCL_RDMA_TC set by default to [132]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.405 [base_config.cc:146][23553][HCCL_ENV] HCCL_RDMA_SL set by default to [4]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.407 [base_config.cc:150][23553][HCCL_ENV] HCCL_RDMA_TIMEOUT set by default to [20]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.409 [base_config.cc:154][23553][HCCL_ENV] HCCL_RDMA_RETRY_CNT set by default to [7]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.410 [base_config.cc:158][23553][HCCL_ENV] HCCL_UBOE_TIMEOUT set by default to [16]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.412 [base_config.cc:162][23553][HCCL_ENV] HCCL_UB_TIMEOUT set by default to [8]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.414 [base_config.cc:166][23553][HCCL_ENV] HCCL_RDMA_QPS_PER_CONNECTION set by default to [1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.415 [base_config.cc:170][23553][HCCL_ENV] HCCL_MULTI_QP_THRESHOLD set by default to [512]B
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.417 [base_config.cc:218][23553][HCCL_ENV] PRIM_QUEUE_GEN_NAME set by default to []
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.419 [base_config.cc:232][23553][HCCL_ENV] HCCL_ALGO set by default to []
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.421 [base_config.cc:236][23553][HCCL_ENV] HCCL_BUFFSIZE set by default to [209715200]B
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.427 [base_config.cc:240][23553][HCCL_ENV] HCCL_OP_EXPANSION_MODE set by default to [HcclAccelerator::AICPU_TS]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.429 [base_config.cc:268][23553][HCCL_ENV] HCCL_ENTRY_LOG_ENABLE set by default to [0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.456 [env_func.cc:700][23553][CannVersion][Verification]cann version path /usr/local/Ascend/nnal/atb/latest/version.cfg is not a valid real path
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.459 [base_config.cc:272][23553][HCCL_ENV] LD_LIBRARY_PATH set by environment to []
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.462 [base_config.cc:276][23553][HCCL_ENV] HCCL_DFS_CONFIG task_exception set by default to [1], cluster_heartbeat set by default to [1], rankConsistentState set by default to [0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.991.466 [base_config.cc:302][23553][HCCL_ENV] HCCL_DETOUR set by default to [HcclDetourType::HCCL_DETOUR_DISABLE]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.468 [ra_init.c:165]tid:23553,RaInit : Input parameters: phyId[0], nicPosition:[0] hdcType:[18] enableHdcAsync[1]
+[INFO] NET(23553,host_server):2026-09-21-11:29:17.991.487 [dl_hal_function.c:296]DlHalInit : dl_hal_init success!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.489 [ra_host.c:1552]tid:23553,RaSocketGetWhiteListStatus : white list status: enable[1]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.492 [ra_peer.c:992]tid:23553,RaPeerInit : [init][ra_peer]ra_peer_init phyId[0] start
+[INFO] NET(23553,host_server):2026-09-21-11:29:17.991.518 [dl_hal_function.c:296]DlHalInit : dl_hal_init success!
+[INFO] NET(23553,host_server):2026-09-21-11:29:17.991.536 [dl_hal_function.c:296]DlHalInit : dl_hal_init success!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.539 [rs.c:225]tid:23553,RsPthreadMutexInit : mutex init ok
+[INFO] NET(23553,host_server):2026-09-21-11:29:17.991.541 [dl_hal_function.c:281]DlHalInit : dl_hal_init success, no need to dlopen libascend_hal.so!
+[INFO] NET(23553,host_server):2026-09-21-11:29:17.991.542 [dl_hal_function.c:262]DlHalDeinit : dl_hal_deinit success, no need to dlclose libascend_hal.so!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.549 [rs.c:2237]tid:23553,RsGetProductType : [Get][ChipInfo]chip name is , type:7
+[WARNING] HCCP(23553,host_server):2026-09-21-11:29:17.991.585 [rs_tls.c:1521]tid:23553,rs_ssl_init: can not get manage data, ret(-2). maybe not set tls
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.587 [rs_tls.c:1537]tid:23553,rs_ssl_init: TLS SWITCH (0)
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.598 [rs_epoll.c:724]tid:23553,RsEpollConnectHandleInit : rs_create_epoll ok
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.690 [rs_epoll.c:518]tid:23615,RsEpollHandle : <EPOLL> thread begin! thread_id:281473668662272, pid:23553, ppid:23548
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.705 [rs_epoll.c:455]tid:23615,BindDataCpu : no device need bind cpu, device num 0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.708 [rs_epoll.c:543]tid:23615,RsEpollHandle : pthread[epoll_pthread] is alive!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.718 [rs_epoll.c:745]tid:23553,RsEpollConnectHandleInit : RS INIT OK!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.722 [rs.c:325]tid:23553,RsInitRscbCfg : rs_epoll_connect_handle_init ok cost [0.133000] ms
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.732 [rs_epoll.c:654]tid:23616,RsConnectHandle : <SOCKET> thread begin! thread_id:281473660208128, pid:23553, ppid:23548
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.991.747 [rs_epoll.c:673]tid:23616,RsConnectHandle : pthread[connect_pthread] is alive!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.911 [rs.c:440]tid:23553,RsInit : rs init success, chipId[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.920 [ra_peer.c:1029]tid:23553,RaPeerInit : [init][ra_peer]ra_peer_init phyId[0] succ
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.993.924 [orion_adapter_hccp.cc:228][23553]init ra success,return: ret[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.993.928 [plugin_core.cc:112] [23553][CpuRoceEndpoint][InitHostPeerRaOnce] host peer RA init success, hostResourceId[0].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.993.938 [rdma_handle_manager.cc:68][23553]RdmaHandleManager::Create, devPhyId[0], LinkProtoType[LinkProtoType::RDMA], localIp[20.168.0.19]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:17.993.940 [orion_adapter_hccp.cc:970][23553][HrtRaRdmaInit] Input params: mode=0, phyId=0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.943 [ra_host.c:1727]tid:23553,RaGetIfnum : Input parameters: phyId[0], nicPosition:[0], isAll:[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.946 [ra_peer.c:1101]tid:23553,RaPeerGetIfnum : [get][ra_peer_ifnum]ra_peer_get_ifnum phyId[0] start
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.952 [ra_peer.c:1108]tid:23553,RaPeerGetIfnum : [get][ra_peer_ifnum]ra_peer_get_ifnum phyId[0] succ
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.953 [ra_host.c:1777]tid:23553,RaGetIfaddrs : Input parameters: phyId[0], nicPosition:[0], isAll[0], interface num[35]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.955 [ra_peer.c:1118]tid:23553,RaPeerGetIfaddrs : [get][ra_peer_ifaddrs] ra_peer_get_ifaddrs phyId[0] start
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.957 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[lo] addr[0x0100007f]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.962 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[enp38s0f0np0] addr[0x1401a814]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.967 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[enp38s0f1np1] addr[0x1c03a814]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.969 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[enp165s0f0np0] addr[0x1300a814]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.970 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[enp165s0f1np1] addr[0x1b02a814]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.971 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[docker0] addr[0x010011ac]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.973 [rs_drv_socket.c:249]tid:23553,RsPeerFillIfaddrInfos : ifname[bond0] addr[0x1b65010a]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.974 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[lo] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.976 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.977 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.979 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.980 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.981 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.982 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.984 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.985 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.986 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.987 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.989 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.990 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.991 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.992 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.994 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.995 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x01
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.996 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[enp38s0f0np0] scope_id[11] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.998 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.993.999 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x80
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.000 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.002 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.003 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.004 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.006 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.008 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.009 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x98
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.011 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x07
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.012 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x86
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.013 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x8d
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.015 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xb8
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.016 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x2f
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.017 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x34
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.019 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x0b
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.020 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[enp38s0f1np1] scope_id[12] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.021 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.023 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x80
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.024 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.025 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.026 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.028 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.029 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.030 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.031 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x0d
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.033 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0xbd
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.034 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0xbe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.035 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0xf5
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.036 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xd6
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.038 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x37
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.039 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x47
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.040 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0xd7
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.042 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[enp165s0f0np0] scope_id[13] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.043 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.044 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x80
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.045 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.047 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.048 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.050 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.052 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.053 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.054 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0xa2
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.055 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x88
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.057 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0xc2
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.058 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0xff
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.059 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.060 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x70
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.062 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x84
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.063 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x4e
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.064 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[enp165s0f1np1] scope_id[14] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.066 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.067 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x80
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.068 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.069 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.071 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.072 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.073 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.074 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.076 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0xa2
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.077 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x88
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.078 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0xc2
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.079 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0xff
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.081 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.082 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x70
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.083 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x84
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.084 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x4f
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.086 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.087 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.088 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.090 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.092 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.093 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.095 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.096 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.097 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.098 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.100 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.101 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.102 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.103 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.105 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.106 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x85
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.107 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.109 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.110 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.111 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.112 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.114 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.115 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.116 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x03
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.118 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.119 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.120 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.121 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.123 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.124 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.125 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.126 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.128 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x84
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.129 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.130 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.133 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.134 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.135 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.136 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.138 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.139 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.140 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.141 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.143 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.144 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.145 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.146 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.148 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.149 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.150 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x83
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.152 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.153 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.154 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.155 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.157 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.158 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.159 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.161 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x01
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.162 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.163 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.164 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.166 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.167 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.168 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.169 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.171 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.172 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x82
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.175 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.177 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.178 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.179 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.181 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.182 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.183 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.184 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x3f
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.186 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.187 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.188 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.189 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.191 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.192 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.193 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.194 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.196 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x8b
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.197 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.198 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.200 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.201 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.202 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.203 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.205 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.206 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x07
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.207 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.208 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.210 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.211 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.212 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.213 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.215 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.217 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.218 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x88
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.220 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.221 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.222 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.224 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.225 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.226 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.227 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.229 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x06
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.230 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.231 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.232 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.234 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.235 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.236 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.237 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.239 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.240 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x87
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.241 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.242 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma0] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.244 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.245 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.246 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.248 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.249 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.250 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x05
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.251 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.252 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.254 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.255 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.256 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.259 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.260 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.261 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.262 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x86
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.264 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.265 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.266 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.268 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.269 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.270 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.271 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.273 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x43
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.274 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.275 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.276 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.278 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.279 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.280 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.281 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.283 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.284 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x84
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.285 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.287 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.288 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.289 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.290 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.292 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.293 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.294 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x42
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.295 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.297 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.298 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.300 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.302 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.303 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.304 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.305 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.307 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x83
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.308 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.309 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.310 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.312 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.313 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.314 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.315 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.317 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x41
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.318 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.319 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.320 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.322 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.323 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.324 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.326 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.327 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.328 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x82
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.329 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.331 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.332 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.333 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.334 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.336 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.337 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.338 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x7f
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.340 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.342 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.343 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.344 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.346 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.347 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.348 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.349 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.351 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x8b
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.352 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.353 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.354 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.356 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.357 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.358 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.359 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.361 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x47
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.362 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.363 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.364 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.366 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.367 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.368 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.370 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.371 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.372 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x88
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.373 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.375 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.376 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.377 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.378 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.380 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.382 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.383 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x46
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.384 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.386 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.387 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.388 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.389 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.391 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.392 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.393 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.395 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x87
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.396 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.397 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.398 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.400 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.401 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.402 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.403 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.405 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x45
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.406 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.407 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.408 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.410 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.411 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.412 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.414 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.415 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.416 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x86
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.417 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.419 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma1] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.420 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.421 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.424 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.425 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.426 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.427 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x44
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.429 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x02
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.430 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.431 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.432 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.434 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.435 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.436 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.437 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.439 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x85
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.440 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.441 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma2] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.443 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.444 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.445 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.446 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.448 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.449 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.450 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.451 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.453 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.454 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.455 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.456 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.458 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.459 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.460 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x81
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.461 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.463 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma2] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.465 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.466 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.468 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.469 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.470 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.471 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x08
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.473 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.474 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.475 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.476 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.478 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.479 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.480 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.482 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.483 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x89
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.484 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.485 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma3] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.487 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.488 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.489 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.490 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.492 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.493 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.494 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x03
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.495 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.497 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.498 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.499 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.500 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.502 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.503 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.505 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x81
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.506 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.508 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma4] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.509 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.510 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.512 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.513 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.514 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.515 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x40
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.517 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x03
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.518 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.519 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.520 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.522 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.523 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.524 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.525 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.527 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x81
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.528 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.529 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma5] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.531 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.532 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.533 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.534 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.536 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.537 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x48
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.538 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.539 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.541 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.542 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.543 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.544 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.547 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.548 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.549 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x89
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.550 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.552 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[ipourma5] scope_id[0] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.553 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.554 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.555 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.557 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.558 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.559 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x40
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.561 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.562 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.563 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.564 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0x10
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.566 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.567 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.568 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xdf
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.569 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0x04
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.571 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x81
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.572 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.573 [rs_drv_socket.c:253]tid:23553,RsPeerFillIfaddrInfos : ifname[bond0] scope_id[23] flowinfo[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.575 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[0] 0xfe
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.576 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[1] 0x80
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.577 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[2] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.578 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[3] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.580 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[4] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.581 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[5] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.582 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[6] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.583 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[7] 0x00
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.585 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[8] 0x2a
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.586 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[9] 0xff
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.588 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[10] 0x7b
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.589 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[11] 0x56
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.591 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[12] 0xf9
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.592 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[13] 0xd4
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.593 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[14] 0x16
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.594 [rs_drv_socket.c:257]tid:23553,RsPeerFillIfaddrInfos : addr[15] 0x19
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.596 [ra_peer.c:1126]tid:23553,RaPeerGetIfaddrs : [get][ra_peer_ifaddrs] ra_peer_get_ifaddrs phyId[0] succ
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.598 [ra_host.c:508]tid:23553,RaRdevInitWithBackupInfo : rdev_init:mode=0 phyId=0 family=2 ip=20.168.0.19 notify_type=0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.994.601 [ra_peer.c:1244]tid:23553,RaPeerRdevInit : [init][ra_peer_rdev]ra_peer_rdev_init phyId[0] notify_type[0] physical device id[0]
+[WARNING] HCCP(23553,host_server):2026-09-21-11:29:17.995.402 [dl_ibverbs_function.c:526]tid:23553,RsHrnApiInit : HccpDlopen[libhrn3-rdmav34.so] doesn't exist!
+[WARNING] HCCP(23553,host_server):2026-09-21-11:29:17.995.461 [dl_nda_function.c:100]tid:23553,RsNdaApiInit : HccpDlopen[libibv_extend.so] doesn't exist!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:17.996.632 [rs.c:1047]tid:23553,RsRdevInitWithBackupInfo : ibv_get_device_list phyId[0] dev_num[4]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:18.009.942 [rs.c:1060]tid:23553,RsRdevInitWithBackupInfo : rdev init success, phyId:0, localIp:0x1300a814, rdevIndex:1
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.009.963 [rdma_handle_manager.cc:143][23553][RdmaHandleManager::GetByAddr] one rdmahandle [0xaaaaf04483f0], devPhyId [0], portAddr [IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.009.967 [cpu_roce_endpoint.cc:67] [23553]CpuRoceEndpoint::Init success, hostResourceId[0], ipAddr[IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19]], ctxHandle[0xaaaaf04483f0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.009.971 [hcomm_c_adpt.cc:376] [23553][NicPluginDebug][HcommEndpointCreate] plugin endpoint created, protocol[1], handle[0x8000aaaaf0442c20].
+API HcommEndpointCreate(&desc, &endpoint) => 0
+
+STAGE 2. 分配并注册 Host DRAM，填入唯一被测字符串
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:18.009.982 [hcomm_adapter_runtime.cc:33] [23553][HcommAdapterRuntime][ResolveRuntimeDevicePhyId] force Host-only resource id[0], env[HCOMM_FORCE_HOST_NIC_PLUGIN]=1, test only.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.009.984 [hcomm_c_adpt.cc:460] [23553][HcommMemReg] START. endpointHandle[0x8000aaaaf0442c20].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.009.989 [roce_mem.cc:32] [23553][RegisterMemory] Begin
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:18.010.001 [roce_mem.cc:107] [23553]Key[addr:187651152486400, size:4096] not found. There is no key in table.
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:18.010.005 [rs_rdma.c:713]tid:23553,RsRegisterMr : [rs_register_mr] len[0x1000], access[15]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:18.010.242 [rs_rdma.c:742]tid:23553,RsRegisterMr : rs_register_mr succ
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.010.246 [local_rdma_rma_buffer.cc:45][23553]LocalRdmaRmaBuffer[rdmaHandle=0xaaaaf04483f0, mrHandle = 0xaaaaf04917f0, buf=Buffer[addr=0xaaaaf0492000, size=0x1000, memInfo=host-dram]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.010.249 [roce_mem.cc:69] [23553][RoceRegedMemMgr][RegisterMemory]Register memory success! Add key {0xaaaaf0492000, 4096}
+API HcommMemReg(endpoint, "host-dram", &memory, &registration) => 0
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:18.010.257 [hcomm_adapter_runtime.cc:33] [23553][HcommAdapterRuntime][ResolveRuntimeDevicePhyId] force Host-only resource id[0], env[HCOMM_FORCE_HOST_NIC_PLUGIN]=1, test only.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.010.258 [hcomm_c_adpt.cc:508] [23553][HcommMemExport] START. endpointHandle[0x8000aaaaf0442c20].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:18.010.261 [roce_mem.cc:147] [23553][MemoryExport] Begin
+API HcommMemExport(endpoint, registration, &description, &bytes) => 0
+
+STAGE 3. TCP 交换 opaque MR 描述符，NPU 使用标准接口导入 Host DRAM
+Control listening 10.1.101.27:19516
+
+STAGE 4. 标准 HcommChannelCreate/GetStatus 完成 Host 侧建链
+API HcommChannelDescInit(&desc, 1) => 0
+API EndpointDescInit(&desc, 1) => 0
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.522 [hcomm_c_adpt.cc:642] [23553][HcommChannelCreate] START. endpointHandle[0x8000aaaaf0442c20], engine[CPU], channelNum[1].
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:21.261.528 [hcomm_adapter_runtime.cc:33] [23553][HcommAdapterRuntime][ResolveRuntimeDevicePhyId] force Host-only resource id[0], env[HCOMM_FORCE_HOST_NIC_PLUGIN]=1, test only.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.537 [host_cpu_roce_channel.cc:101] [23553][HostCpuRoceChannel][ParseInputParam] Start. endpointHandle[0xaaaaee6a2c00]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.540 [host_cpu_roce_channel.cc:115] [23553][HostCpuRoceChannel][ParseInputParam] exchangeAllMems == True. Get memHandles from endpoint.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.542 [roce_mem.cc:251] [23553][GetAllMemHandles] Begin
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.544 [roce_mem.cc:257] [23553][RoceRegedMemMgr][[GetAllMemHandles] memHandleNum is [1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.545 [host_cpu_roce_channel.cc:119] [23553][HostCpuRoceChannel][ParseInputParam] Got memHandleNum[1].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.548 [host_cpu_roce_channel.cc:124] [23553][HostCpuRoceChannel][ParseInputParam] Got memHandle No.0: addr[0xaaaaf0492000], size[0x1000], memInfo[host-dram].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.551 [cpu_roce_endpoint.cc:176] [23553][CpuRoceEndpoint::GetCapabilities] START.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.554 [cpu_roce_endpoint.cc:190] [23553][CpuRoceEndpoint::GetCapabilities] SUCCESS.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.556 [host_cpu_roce_channel.cc:153] [23553][HostCpuRoceChannel][ParseInputParam] maxMsgSize_[0x40000000].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.557 [host_cpu_roce_channel.cc:161] [23553][HostCpuRoceChannel::StartListen] Start. EndpointHandle[0xaaaaee6a2c00], port[19517]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.560 [cpu_roce_endpoint.cc:84] [23553][ConnProto2LinkProto] linkType is[LinkProtoType::RDMA]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.565 [cpu_roce_endpoint.cc:86] [23553][CpuRoceEndpoint::ServerSocketListen] hostResourceId[0] ipAddress[IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.570 [host_socket_handle_manager.cc:34][23553][HostSocketHandleManager::Create] start
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.575 [orion_adapter_hccp.cc:709][23553][HrtRaSocketInit] Input params: mode=0, ip=318810132, device id=0, family=2
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.577 [ra_host.c:239]tid:23553,RaSocketInit : socket init:mode=0 phyId=0 family=2 ip=20.168.0.19
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.580 [orion_adapter_hccp.cc:719][23553]socket init success, ip[318810132], device id[0], ret[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.584 [host_socket_handle_manager.cc:68][23553][HostSocketHandleManager::Create] devicePhyId[0] hostIp[20.168.0.19] create end.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.595 [server_socket_manager.cc:50] [23553][ServerSocketManager][HostSocketListen] listen_socket_info[Socket[role=SocketRole::SERVER, localIp=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19], listenPort=19517, remoteIp=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19], tag=server, nicType=NicType::HOST_NIC_TYPE]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.604 [socket.cc:33][23553][Socket::Listen] listen start, listenPort[19517]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.606 [orion_adapter_hccp.cc:452][23553][ListenStart][RaSocket] Input params: socketHandle: 0xaaaaf0491d30, port: 19517
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.608 [orion_adapter_hccp.cc:364][23553][ListenStart][RaSocket] Input params: num=1
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.611 [ra_host.c:833]tid:23553,RaSocketListenStart : Input parameters: [0]th, phyId[0], localIp[20.168.0.19], port[19517]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.615 [rs_socket.c:645]tid:23553,RsSocketInitListen : listen [0] IP 0xffff1300a814, ret_vnic -1
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.617 [rs_drv_socket.c:563]tid:23553,RsFindListenNode : listen node for IP(20.168.0.19), serverPort(19517) is not listen!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.619 [rs_drv_socket.c:563]tid:23553,RsFindListenNode : listen node for IP(20.168.0.19), serverPort(19517) is not listen!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.621 [rs_drv_socket.c:620]tid:23553,RsListenNodeAlloc : create listen node for IP(20.168.0.19)!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.630 [rs_socket.c:573]tid:23553,RsSocketListenBindListen : listen state:1, then bind for (IP 20.168.0.19 : port 19517)
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.632 [rs_socket.c:576]tid:23553,RsSocketListenBindListen : socket bind: family 2, addr 20.168.0.19, port 19517
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.634 [rs_socket.c:583]tid:23553,RsSocketListenBindListen : socket bind: family 2, port 15692, addr 0x1300a814
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.640 [rs_socket.c:614]tid:23553,RsSocketListenBindListen : IP 20.168.0.19 : port 19517 begin listen, fd:7 !
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.646 [orion_adapter_hccp.cc:372][23553]socket listen start success, ret=0
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.653 [host_cpu_roce_channel.cc:169] [23553][HostCpuRoceChannel::StartListen] SUCCESS. port[19517].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.655 [host_cpu_roce_channel.cc:178] [23553][HostCpuRoceChannel::BuildSocket] socket ptr is NULL, rebuild Socket
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.671 [host_cpu_roce_channel.cc:182] [23553][HostCpuRoceChannel::BuildSocket] built linkData: LinkData:type=PortDeploymentType::HOST_NET, protocol=LinkProtocol::ROCE, localRankId=0, localAddr=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19], remoteRankId=2, remoteAddr=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0003, AF=IPv4, addr=20.168.0.3], reuseIdx=0
+[WARNING] HCCL(23553,host_server):2026-09-21-11:29:21.261.677 [hcomm_adapter_runtime.cc:33] [23553][HcommAdapterRuntime][ResolveRuntimeDevicePhyId] force Host-only resource id[0], env[HCOMM_FORCE_HOST_NIC_PLUGIN]=1, test only.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.679 [socket_mgr.cc:60] [23553][SocketMgr][Init] init socket mgr, noDevice[1], runtimeDevicePhyId[0], devicePhyId[0].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.687 [socket_mgr.cc:113] [23553][SocketMgr][GetSocketHandle] socketHandle[0xaaaaf0491d30] devicePhyId[0] localPort[PortData[rankId=0, type=PortDeploymentType::HOST_NET, id=0, addr=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19]]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.695 [orion_adapter_hccp.cc:763][23553][HrtRaSocketWhiteListAdd] Input params: socketHandle=0xaaaaf0491d30
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.702 [orion_adapter_hccp.cc:781][23553]add whitelistInfo tag=[standard-host-to-hbm_20.168.0.19_20.168.0.3_19517], remoteIp[IpAddress[0000:0000:0000:0000:0000:0000:14a8:0003, AF=IPv4, addr=20.168.0.3]]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.704 [ra_host.c:1598]tid:23553,RaSocketWhiteListAdd : Input parameters: phyId[0], localIp[20.168.0.19], num[1]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.707 [rs_socket.c:1992]tid:23553,RsSocketGetIpInfo : white list listen IP 0x1300a814, ret_vnic -1
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.709 [rs_socket.c:1995]tid:23553,RsSocketGetIpInfo : white list client IP 0x300a814, ret_vnic -1
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.711 [rs_drv_socket.c:753]tid:23553,RsFindWhiteList : white list for IP(20.168.0.19) doesn't exist!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.261.713 [rs_drv_socket.c:729]tid:23553,RsFindWhiteListNode : white list node for IP(20.168.0.3), tag(standard-host-to-hbm_20.168.0.19_20.168.0.3_19517) doesn't exist!
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.716 [orion_adapter_hccp.cc:791][23553]add white list: num[1], remain [0].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.718 [orion_adapter_hccp.cc:797][23553][HrtRaSocketWhiteListAdd] Success. Total add num [1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.723 [socket_mgr.cc:153] [23553][SocketMgr][CreateSocket] client_socket_info[Socket[role=SocketRole::SERVER, localIp=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0013, AF=IPv4, addr=20.168.0.19], listenPort=19517, remoteIp=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0003, AF=IPv4, addr=20.168.0.3], tag=standard-host-to-hbm_20.168.0.19_20.168.0.3_19517, nicType=NicType::HOST_NIC_TYPE]]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.726 [socket.cc:61][23553]socket role_ is 0, SocketRole::SERVER
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.732 [host_cpu_roce_channel.cc:195] [23553][HostCpuRoceChannel::BuildSocket] SUCCESS. port[19517].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.735 [host_rdma_connection.cc:28] [23553][HostRdmaConnection][GetHostQpMode] host-only default qpMode[2].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.737 [host_cpu_roce_channel.cc:227] [23553][HostCpuRoceChannel::BuildConnection] QpInfo[0]: lbValue[0], serviceLevel[0], trafficClass[0], retryCnt[4294967295], retryInterval[4294967295].
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.748 [host_cpu_roce_channel.cc:233] [23553][HostCpuRoceChannel::BuildConnection] Success, Qp count = 1
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.753 [dpu_notify_manager.cc:64] [23553][DpuNotifyManager::AllocNotifyIds] notifyNum == 0, no need to alloc.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.760 [orion_adapter_hccp.cc:518][23553][GetOneSocket][RaSocket] Input params: role=0,socketHandle=0xaaaaf0491d30, fdHandle=(nil), remoteIp=IpAddress[0000:0000:0000:0000:0000:0000:14a8:0003, AF=IPv4, addr=20.168.0.3], timeout=0
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.763 [orion_adapter_hccp.cc:533][23553]Socket Get tag=[standard-host-to-hbm_20.168.0.19_20.168.0.3_19517], remoteIp[IpAddress[0000:0000:0000:0000:0000:0000:14a8:0003, AF=IPv4, addr=20.168.0.3]], ret[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.261.765 [orion_adapter_hccp.cc:484][23553][GetSockets][RaBlock] Input params: role=0, num=1, timeoutSec=0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.313 [rs_socket.c:493]tid:23615,RsEpollEventListenInHandle : [server]server_ip:20.168.0.19 server_port:19517 accept ok, listen_fd:7, new fd:9
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.382 [rs_socket.c:377]tid:23615,RsTcpRecvTagInHandle : recv tag success, server:{20.168.0.19:19517} client:20.168.0.3 timeCost:0.058000ms tagSyncTimes:1 tagEintrTimes:0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.393 [rs_drv_socket.c:718]tid:23615,RsFindWhiteListNode : client_ip 20.168.0.3 0x0300a814, expectIp 20.168.0.3 0x0300a814
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.438 [rs_epoll.c:126]tid:23615,RsWlistCheckConnAdd : [Server]chip_id 0, fd 9 accept, server ip:20.168.0.19, client ip:20.168.0.3, state:8, tag:standard-host-to-hbm_20.168.0.19_20.168.0.3_19517
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.442 [rs_drv_socket.c:505]tid:23615,ShowConnNode : current server ip: 20.168.0.19, client ip:20.168.0.3, fd:9, state:8, tag:standard-host-to-hbm_20.168.0.19_20.168.0.3_19517
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.262.444 [rs_epoll.c:333]tid:23615,RsEpollEventInHandle : the fd:7 is tcp listened, no need to go on, ret:0
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.827 [orion_adapter_hccp.cc:505][23553]block get sockets success, socket num[1]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.835 [socket.cc:110][23553]socketinfo.tag=standard-host-to-hbm_20.168.0.19_20.168.0.3_19517 status=SocketStatus::OK, role=SocketRole::SERVER
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.838 [host_cpu_roce_channel.cc:1476] [23553][Hybrid][HostCpuRoceChannel] Starting capability exchange
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.841 [orion_adapter_hccp.cc:550][23553]before ra socket send, para: fdHandle[0xaaaaf0494b60], data[0xffffee7b3c48], size[20]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.853 [orion_adapter_hccp.cc:556][23553]ra socket send, data[0xffffee7b3c48], size[20] send size[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.863 [orion_adapter_hccp.cc:582][23553]ra socket send finished,ret[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.865 [host_cpu_roce_channel.cc:1487] [23553][Hybrid][HostCpuRoceChannel] Sent capability, version=1
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.262.867 [orion_adapter_hccp.cc:662][23553]before ra socket recv, para: fdHandle[0xaaaaf0494b60], data[0xffffee7b3c60], size[20]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.464 [orion_adapter_hccp.cc:698][23553]ra socket receive finished. ret[0]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.468 [host_cpu_roce_channel.cc:1493] [23553][Hybrid][HostCpuRoceChannel] recvCap success
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.470 [host_cpu_roce_channel.cc:1531] [23553][Hybrid][HostCpuRoceChannel] Capability exchange success, remote commStack=1, version=1, mode=hybrid
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.474 [socket.cc:84][23553]socketinfo.tag=standard-host-to-hbm_20.168.0.19_20.168.0.3_19517 status is OK, role=SocketRole::SERVER
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.476 [host_rdma_connection.cc:77] [23553]HostRdmaConnection CreateCompChannel
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.274.485 [rs_rdma.c:3266]tid:23553,RsCreateCompChannel : create comp channel success!
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.274.488 [rs_rdma.c:3266]tid:23553,RsCreateCompChannel : create comp channel success!
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.489 [host_rdma_connection.cc:94] [23553]HostRdmaConnection CreateCqAndQp
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.492 [orion_adapter_hccp.cc:2419][23553][HrtRaCreateQpWithCq] Input params: rdmaHandle=0xaaaaf04483f0, sqEvent=-1, rqEvent=-1, sendChannel=0xaaaaf0494c60, recvChannel=0xaaaaf0494c00
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.274.498 [orion_adapter_hccp.cc:2471][23553][HrtRaCreateCq] Input params: rdmaHandle=0xaaaaf04483f0, sq=(nil), rq=(nil), context=(nil)
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.274.500 [ra_host.c:1907]tid:23553,RaCqCreate : Input parameters: phyId[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.277.094 [rs_drv_rdma.c:1287]tid:23553,RsDrvCreateCqWithChannel : create cq with channel success
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.277.103 [orion_adapter_hccp.cc:2521][23553][HrtRaNormalQpCreate] Input params: rdmaHandle=0xaaaaf04483f0, context=0xaaaaf04952b0
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.277.105 [ra_host.c:1968]tid:23553,RaNormalQpCreate : Input parameters: phyId[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.278.589 [rs_drv_rdma.c:1365]tid:23553,RsDrvNormalQpCreate : chip_id 0, rdevIndex:1, qp[553] create succ.
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.278.593 [rs_rdma.c:3208]tid:23553,RsNormalQpCreate : qp 553 create qp.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.278.597 [host_rdma_connection.cc:101] [23553][CreateQp]Set qp qos success by config, TC[0] SL[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.278.600 [rs.c:1994]tid:23553,RsSetQpAttrQos : set qp qos attr: qpn[553] tc[0] sl[0]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.278.602 [rs.c:2010]tid:23553,RsSetQpAttrTimeout : set qp qos attr: qpn[553] timeout[4294967295]
+[INFO] HCCP(23553,host_server):2026-09-21-11:29:21.278.604 [rs.c:2026]tid:23553,RsSetQpAttrRetryCnt : set qp qos attr: qpn[553] retry_cnt[4294967295]
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.278.606 [host_cpu_roce_channel.cc:370] [23553][HostCpuRoceChannel::IsResReady] all connections resources connected.
+[INFO] HCCL(23553,host_server):2026-09-21-11:29:21.278.609 [host_cpu_roce_channel.cc:1687] [23553][Hybrid] Starting hybrid data exchange
+FAIL (not validated): bad_function_call

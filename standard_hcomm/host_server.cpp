@@ -34,16 +34,16 @@ int main(int argc, char **argv)
         HcommMemHandle registration = nullptr;
         CHECK_API(HcommMemReg(endpoint, "host-dram", &memory, &registration));
         void *description = nullptr;
-        uint32_t bytes = 0, listenPort = 0;
+        uint32_t bytes = 0, listenPort = HCOMM_LISTEN_PORT;
         CHECK_API(HcommMemExport(endpoint, registration, &description, &bytes));
-        CHECK_API(HcommEndpointGetListenPort(endpoint, &listenPort));
-        Require(listenPort > 0 && listenPort <= UINT16_MAX, "hcomm listen port");
+        // 此 9.1 分支对插件 Endpoint 的 GetListenPort 返回 NOT_SUPPORT。
+        // 使用公开 ChannelDesc.port；实际监听仍由 HcommChannelCreate 内部完成。
 
-        Stage("3. TCP 交换 opaque MR 描述符；标准接口导入对端 HBM");
+        Stage("3. TCP 交换 opaque MR 描述符，NPU 使用标准接口导入 Host DRAM");
         int control = OpenControl(true);
-        PeerMemory peer = ExchangeMemory(control, true, listenPort, description, bytes);
-        CHECK_API(HcommMemImport(endpoint, peer.descriptor.data(), peer.descriptor.size(), &peer.memory));
-        Require(peer.memory.type == COMM_MEM_TYPE_DEVICE && peer.memory.addr != nullptr, "remote HBM");
+        ExchangeMemory(control, true, listenPort, description, bytes);
+        // Host 仅作 READ responder，不访问对端 HBM，因此无需导入 NPU 的 MR。
+        // hcomm Channel 自己交换建链资源；应用不解析 opaque 描述符中的 rkey。
 
         Stage("4. 标准 HcommChannelCreate/GetStatus 完成 Host 侧建链");
         ChannelHandle channel = CreateChannel(endpoint, true, static_cast<uint16_t>(listenPort));
@@ -57,7 +57,6 @@ int main(int argc, char **argv)
 
         Stage("6. 先销毁通道，再注销 MR 和释放源 DRAM");
         CHECK_API(HcommChannelDestroy(&channel, 1));
-        CHECK_API(HcommMemUnimport(endpoint, peer.descriptor.data(), peer.descriptor.size()));
         CHECK_API(HcommMemUnreg(endpoint, registration));
         CHECK_API(HcommEndpointDestroy(endpoint));
         free(dram);

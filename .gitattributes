@@ -3,3 +3,6 @@
 *.cpp text eol=lf
 *.h text eol=lf
 *.md text eol=lf
+standard_hcomm/*.sh text eol=lf
+standard_hcomm/patches/*.patch -text
+evidence/nocoder_20260921/** -text

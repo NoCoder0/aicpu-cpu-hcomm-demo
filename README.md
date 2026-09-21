@@ -1,10 +1,10 @@
 # Host DRAM → NPU HBM：最小 RDMA SGL Demo 可行性
 
-**当前分支：`feature/standard-hcomm-host-to-hbm`。已从 hhy 复制独立 CANN 9.1 容器，
-完成 hcomm 全量构建、demo 编译和 NPU Endpoint 实测。Host4 的标准 RoCE 插件加载成功，
-但底层 HCCP 仍要求查询 NPU 逻辑设备号，导致无卡 Host 初始化失败；标准 READ 尚未跑通。**
-审阅入口：[标准接口代码与建链说明](standard_hcomm/README.md)。
-环境、兼容改动和运行证据：[独立容器记录](standard_hcomm/CONTAINER_RUN.md)。
+**当前分支：`feature/nocoder-hcomm-host3`。标准 hcomm READ 已于2026-09-21实机通过。**
+使用 NoCoder0 `feat/aicpu-urma-design` 固定提交及兼容修复，在 Host3/A3 的独立 CANN 9.1 容器内，
+通过公开接口建链并将16字节从 Host3 DRAM 读入 NPU2 HBM，4080字节哨兵不变，两端退出0。
+当前版本与限制：[标准接口说明](standard_hcomm/README.md)、[实测报告](standard_hcomm/RESULT_NOCODER.md)。
+仅验证最小单段读取，多 SGE 尚未验证。
 
 **上一分支结果：含自定义 READ 扩展的完整 hcomm 源码构建版于 2026-09-20 23:24 实机通过。**
 见 [完整 hcomm 说明](full_hcomm/README.md) 和 [本版实测报告](full_hcomm/RESULT.md)。

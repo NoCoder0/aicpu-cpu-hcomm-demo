@@ -1,3 +1,5 @@
+> 历史环境记录。当前 NoCoder 分支已跑通，最新状态见 [RESULT_NOCODER.md](RESULT_NOCODER.md)。
+
 # Host3 独立容器
 
 2026-09-21，在 Host3（10.1.101.27）从运行中的 `hhy` 创建快照并启动独立容器。

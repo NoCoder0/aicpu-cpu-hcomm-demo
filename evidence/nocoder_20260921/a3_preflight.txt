@@ -1,0 +1,11 @@
+2026-09-21T20:19:22+08:00
+ipaddr:20.168.0.3
+netmask:255.255.255.0
+link status: UP
+device 2 PING 20.168.0.19
+recv seq=0,time=0.083000ms
+recv seq=1,time=0.035000ms
+recv seq=2,time=0.032000ms
+3 packets transmitted, 3 received, 0.00% packet loss
+PING_RC=0
+0

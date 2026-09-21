@@ -15,10 +15,15 @@
 #include <thread>
 #include <vector>
 
-constexpr const char *HOST_CONTROL_IP = "10.1.101.32";
-constexpr const char *HOST_RDMA_IP = "20.168.0.17";
-constexpr const char *NPU_RDMA_IP = "20.168.0.1";
+// Host3 与 A3 设备2的配对地址；两端编译必须使用同一份配置。
+constexpr const char *HOST_CONTROL_IP = "10.1.101.27";
+constexpr const char *HOST_RDMA_IP = "20.168.0.19";
+constexpr const char *NPU_RDMA_IP = "20.168.0.3";
+constexpr int32_t NPU_DEVICE_ID = 2;
 constexpr uint16_t CONTROL_PORT = 19516; // 与已有 demo 的19515隔离。
+// 本分支尚未把插件监听端口查询接入 HcommEndpointGetListenPort。
+// 通过标准 HcommChannelDesc::port 显式指定端口，由 hcomm 创建监听 socket。
+constexpr uint16_t HCOMM_LISTEN_PORT = 19517;
 constexpr size_t BUFFER_BYTES = 4096;
 constexpr char PAYLOAD[] = "hello rdma demo";
 
@@ -36,7 +41,7 @@ inline void Check(int32_t rc, const char *operation)
 
 inline void Stage(const char *name) { printf("\nSTAGE %s\n", name); }
 
-inline EndpointDesc MakeEndpoint(bool device, uint32_t physicalId = 0)
+inline EndpointDesc MakeEndpoint(bool device, uint32_t physicalId = NPU_DEVICE_ID)
 {
     EndpointDesc desc{};
     CHECK_API(EndpointDescInit(&desc, 1));
@@ -135,7 +140,7 @@ inline ChannelHandle CreateChannel(EndpointHandle endpoint, bool server, uint16_
     CHECK_API(HcommChannelDescInit(&desc, 1));
     desc.remoteEndpoint = MakeEndpoint(server); // Host 对端是 DEVICE；NPU 对端是 HOST。
     desc.role = server ? HCOMM_SOCKET_ROLE_SERVER : HCOMM_SOCKET_ROLE_CLIENT;
-    desc.port = listenPort; // 来自 HcommEndpointGetListenPort，不猜测内部默认端口。
+    desc.port = listenPort; // 显式配置并经控制面交换的端口，由 hcomm 标准建链接口使用。
     desc.exchangeAllMems = true;
     desc.notifyNum = 0;
     desc.channelName = "standard-host-to-hbm"; // 两端相同，供 hcomm 匹配本条连接。

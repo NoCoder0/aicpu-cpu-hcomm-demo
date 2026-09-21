@@ -1,0 +1,12 @@
+dropped privs to tcpdump
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on enp165s0f0np0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+20:06:13.057030 IP 20.168.0.3 > 20.168.0.19: ICMP echo request, id 3, seq 48681, length 12
+20:06:13.057042 IP 20.168.0.19 > 20.168.0.3: ICMP echo reply, id 3, seq 48681, length 12
+20:06:15.558018 IP 20.168.0.3 > 20.168.0.19: ICMP echo request, id 3, seq 48937, length 12
+20:06:15.558024 IP 20.168.0.19 > 20.168.0.3: ICMP echo reply, id 3, seq 48937, length 12
+20:06:18.059073 IP 20.168.0.3 > 20.168.0.19: ICMP echo request, id 3, seq 49193, length 12
+20:06:18.059094 IP 20.168.0.19 > 20.168.0.3: ICMP echo reply, id 3, seq 49193, length 12
+6 packets captured
+6 packets received by filter
+0 packets dropped by kernel

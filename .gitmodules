@@ -1,3 +1,4 @@
 [submodule "reference/hcomm"]
 	path = reference/hcomm
-	url = https://github.com/hicann/hcomm.git
+	url = https://github.com/NoCoder0/hcomm.git
+	branch = feat/aicpu-urma-design

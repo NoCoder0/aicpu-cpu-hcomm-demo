@@ -1,7 +1,7 @@
 // 审阅入口：同一文件包含两种编译目标，避免把标准 READ 藏在另一个封装库中。
 // STANDARD_HCOMM_AICPU：下面的 StandardReadKernel 在 AICPU 上执行。
 // 默认：main 在 A3 宿主机上执行，用标准 Hcomm* 外部接口创建通信资源。
-// 本版在独立 CANN 9.1 容器构建；实际验证状态见 CONTAINER_RUN.md。
+// 本版在独立 CANN 9.1 容器构建；实际验证状态见 RESULT_NOCODER.md。
 #include <hcomm_primitives.h>
 #include <cstdint>
 
@@ -13,6 +13,8 @@ struct ReadArgs {
     uint64_t bytes;
     int32_t readResult;
     int32_t drainResult;
+    int32_t batchStartResult;
+    int32_t batchEndResult;
 };
 
 #ifdef STANDARD_HCOMM_AICPU
@@ -26,13 +28,20 @@ extern "C" __attribute__((visibility("default"))) uint32_t StandardReadKernel(vo
     auto *args = reinterpret_cast<ReadArgs *>(*static_cast<uint64_t *>(rawArgs));
     if (args == nullptr) return 2;
 
+    // AICPU 原语先生成通信任务；使用公开批量接口明确提交时点。
+    // Start / READ / Drain / End 必须在同一个 AICPU 执行线程内调用。
+    args->batchStartResult = HcommBatchModeStart("standard-read");
+    if (args->batchStartResult != 0) return 0;
+
     // 真正的数据读取：标准上游 HCOMM READ，目标为 HBM，源为导入的 Host DRAM 地址。
     args->readResult = HcommReadOnThread(args->thread, args->channel,
         reinterpret_cast<void *>(args->destination), reinterpret_cast<const void *>(args->source), args->bytes);
     if (args->readResult != 0) return 0; // 错误保存在结果块，由 host 读取并判失败。
 
-    // READ 返回不等于数据已经到达。Drain 下发完成等待；Host 随后同步该通信线程的 stream。
+    // READ 返回不等于数据已经到达。Drain 生成完成等待，BatchEnd 提交，Host 再同步设备。
     args->drainResult = HcommChannelDrainOnThread(args->thread, args->channel);
+    if (args->drainResult != 0) return 0;
+    args->batchEndResult = HcommBatchModeEnd("standard-read");
     return 0;
 }
 
@@ -53,9 +62,8 @@ static void VerifyLibrary()
 static void LaunchRead(ThreadHandle thread, ChannelHandle channel, void *hbm, const CommMem &remote,
     const char *kernelConfig)
 {
-    // HcommThreadAlloc(AICPU_TS) 返回设备侧通信线程；获取它对应的 host stream 用于完成同步。
-    void *communicationStream = nullptr;
-    CHECK_API(HcommThreadResGetInfo(thread, THREAD_RES_TYPE_STREAM, sizeof(void *), &communicationStream));
+    // 此 9.1 分支尚无公开的 HcommThreadResGetInfo。
+    // 后面用 ACL 的设备同步接口等待当前设备的通信任务，不解引用 hcomm 私有句柄。
 
     // 自定义的只是“调用标准 API 的用户 kernel”，不是自定义通信接口或 READ 后端。
     // 该 kernel 必须与本版 hcomm 的设备库一起正确打包部署；不能混用旧 ccl_kernel.so。
@@ -71,7 +79,7 @@ static void LaunchRead(ThreadHandle thread, ChannelHandle channel, void *hbm, co
     CHECK_API(aclrtBinaryGetFunction(binary, "StandardReadKernel", &function));
 
     ReadArgs args{thread, channel, reinterpret_cast<uint64_t>(hbm), reinterpret_cast<uint64_t>(remote.addr),
-        sizeof(PAYLOAD), -1, -1};
+        sizeof(PAYLOAD), -1, -1, -1, -1};
     void *deviceArgs = nullptr;
     CHECK_API(aclrtMalloc(&deviceArgs, sizeof(args), ACL_MEM_MALLOC_NORMAL_ONLY));
     CHECK_API(aclrtMemcpy(deviceArgs, sizeof(args), &args, sizeof(args), ACL_MEMCPY_HOST_TO_DEVICE));
@@ -91,12 +99,14 @@ static void LaunchRead(ThreadHandle thread, ChannelHandle channel, void *hbm, co
     config.attrs = &attribute;
     CHECK_API(aclrtLaunchKernelWithConfig(function, 1, launchStream, &config, packed, nullptr));
 
-    // 第一次同步保证 AICPU 已提交 READ/Drain 并写回返回码；第二次同步保证通信任务执行完成。
+    // 第一次同步保证 AICPU 已提交 READ/Drain 并写回返回码；设备同步等待通信任务完成。
     CHECK_API(aclrtSynchronizeStream(launchStream));
     CHECK_API(aclrtMemcpy(&args, sizeof(args), deviceArgs, sizeof(args), ACL_MEMCPY_DEVICE_TO_HOST));
+    CHECK_API(args.batchStartResult);
     CHECK_API(args.readResult);
     CHECK_API(args.drainResult);
-    CHECK_API(aclrtSynchronizeStream(static_cast<aclrtStream>(communicationStream)));
+    CHECK_API(args.batchEndResult);
+    CHECK_API(aclrtSynchronizeDevice());
     CHECK_API(aclrtDestroyStream(launchStream));
     CHECK_API(aclrtFree(deviceArgs));
     CHECK_API(aclrtBinaryUnLoad(binary));
@@ -111,12 +121,12 @@ int main(int argc, char **argv)
         const bool probeThread = argc == 2 && std::string(argv[1]) == "--probe-thread";
         Require(argc == 2, "usage: npu_reader <standard_read.json> | --probe-endpoint | --probe-thread");
         VerifyLibrary();
-        Stage("1. 初始化 ACL，选择 NPU0，创建 DEVICE/ROCE Endpoint");
+        Stage("1. 初始化 ACL，选择 NPU2，创建 DEVICE/ROCE Endpoint");
         CHECK_API(aclInit(nullptr));
-        CHECK_API(aclrtSetDevice(0));
+        CHECK_API(aclrtSetDevice(NPU_DEVICE_ID));
         int32_t physicalId = -1;
-        CHECK_API(aclrtGetPhyDevIdByLogicDevId(0, &physicalId));
-        Require(physicalId == 0, "selected physical device must be 0");
+        CHECK_API(aclrtGetPhyDevIdByLogicDevId(NPU_DEVICE_ID, &physicalId));
+        Require(physicalId == NPU_DEVICE_ID, "selected physical device must match RDMA IP");
         EndpointDesc local = MakeEndpoint(true, static_cast<uint32_t>(physicalId));
         EndpointHandle endpoint = nullptr;
         // 这是卡侧网络资源入口。上游 v9.0.0 在这里拒绝 DEVICE + ROCE。
@@ -128,13 +138,11 @@ int main(int argc, char **argv)
                 ThreadHandle thread = 0;
                 uint32_t notifyCount = 1;
                 CHECK_API(HcommThreadAlloc(COMM_ENGINE_AICPU_TS, 1, &notifyCount, &thread));
-                void *stream = nullptr;
-                CHECK_API(HcommThreadResGetInfo(thread, THREAD_RES_TYPE_STREAM, sizeof(void *), &stream));
-                Require(stream != nullptr, "communication stream");
+                CHECK_API(aclrtSynchronizeDevice());
                 CHECK_API(HcommThreadFree(&thread, 1));
             }
             CHECK_API(HcommEndpointDestroy(endpoint));
-            CHECK_API(aclrtResetDevice(0));
+            CHECK_API(aclrtResetDevice(NPU_DEVICE_ID));
             CHECK_API(aclFinalize());
             puts("RESOURCE PROBE ONLY: success does not prove channel or RDMA READ support");
             return 0;
@@ -172,6 +180,9 @@ int main(int argc, char **argv)
         Stage("6. 仅为验证将 HBM 回拷 CPU，检查16字节数据和4080字节哨兵");
         unsigned char actual[BUFFER_BYTES];
         CHECK_API(aclrtMemcpy(actual, sizeof(actual), hbm, BUFFER_BYTES, ACL_MEMCPY_DEVICE_TO_HOST));
+        printf("HBM first 16 bytes:");
+        for (size_t i = 0; i < sizeof(PAYLOAD); ++i) printf(" %02x", actual[i]);
+        puts("");
         Require(memcmp(actual, PAYLOAD, sizeof(PAYLOAD)) == 0, "HBM payload mismatch");
         for (size_t i = sizeof(PAYLOAD); i < sizeof(actual); ++i) Require(actual[i] == 0xa5, "HBM guard mismatch");
         puts("PASS: standard HcommReadOnThread HBM='hello rdma demo', bytes=16, guards=4080 unchanged");
@@ -185,7 +196,7 @@ int main(int argc, char **argv)
         CHECK_API(HcommEndpointDestroy(endpoint));
         CHECK_API(aclrtFree(hbm));
         close(control);
-        CHECK_API(aclrtResetDevice(0));
+        CHECK_API(aclrtResetDevice(NPU_DEVICE_ID));
         CHECK_API(aclFinalize());
         return 0;
     } catch (const std::exception &error) {

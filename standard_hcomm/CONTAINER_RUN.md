@@ -1,3 +1,5 @@
+> 历史环境记录。当前 NoCoder 分支已跑通，最新状态见 [RESULT_NOCODER.md](RESULT_NOCODER.md)。
+
 # 独立 CANN 9.1 容器运行记录
 
 2026-09-21。A3 管理地址 `10.1.101.201`。
