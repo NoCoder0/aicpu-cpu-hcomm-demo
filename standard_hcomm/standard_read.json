@@ -1,0 +1,9 @@
+{
+  "StandardReadKernel": {
+    "opInfo": {
+      "functionName": "StandardReadKernel",
+      "kernelSo": "libstandard_read_kernel.so",
+      "opKernelLib": "AICPUKernel"
+    }
+  }
+}

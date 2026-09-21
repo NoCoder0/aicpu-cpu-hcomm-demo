@@ -1,0 +1,6 @@
+{
+  "host": "10.1.101.201",
+  "stdout": "LIBRARY /data1/z00502111/rdma_sgl_host_to_hbm/standard_hcomm/../full_hcomm/deploy/hcomm/lib64/libhcomm.so\naclInit rc=0\naclrtSetDevice(0) rc=0\nHcommEndpointCreate(DEVICE, ROCE, 20.168.0.1) rc=1\naclrtResetDevice rc=0, aclFinalize rc=0\nEndpoint-only probe: this is NOT a successful RDMA READ test.\n",
+  "stderr": "",
+  "exit": 1
+}

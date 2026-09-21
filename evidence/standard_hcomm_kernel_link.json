@@ -1,0 +1,6 @@
+{
+  "host": "10.1.101.201",
+  "stdout": "     3: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND HcommReadOnThread\n     5: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND HcommChannelDrainOnThread\n     9: 0000000000000668   132 FUNC    GLOBAL DEFAULT   11 StandardReadKernel\n    65: 0000000000000668   132 FUNC    GLOBAL DEFAULT   11 StandardReadKernel\n    66: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND HcommReadOnThread\n    68: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND HcommChannelDrainOnThread\n",
+  "stderr": "",
+  "exit": 0
+}

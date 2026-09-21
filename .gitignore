@@ -14,4 +14,9 @@
 /full_hcomm/source/
 /full_hcomm/deploy/
 /full_hcomm/python_deps/
+/standard_hcomm/source/
+/standard_hcomm/deploy/
+/standard_hcomm/probe_endpoint
+/standard_hcomm/npu_reader
+/standard_hcomm/host_server
 __pycache__/
