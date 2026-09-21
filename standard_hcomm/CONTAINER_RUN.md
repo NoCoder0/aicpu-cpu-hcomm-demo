@@ -2,6 +2,10 @@
 
 2026-09-21。A3 管理地址 `10.1.101.201`。
 
+Host3（`10.1.101.27`）现已从其 `hhy` 复制独立容器
+`rdma-hcomm-host-cann91`，后续 Host 端操作使用该容器；详情见
+[Host3 容器记录](HOST3_CONTAINER.md)。下文 Host4 的失败结果保留为此前实验记录。
+
 ## 环境与隔离范围
 
 原容器 `hhy` 的可写层通过 `docker commit --pause=false` 保存为
