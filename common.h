@@ -1,6 +1,7 @@
 // 标准 HCOMM demo 的公共控制面。此处只交换 opaque 内存描述符和监听端口，
 // 不解析 rkey/QPN/PSN，不调用 verbs/RA，也不通过 TCP 搬运被测字符串。
 #pragma once
+#include "benchmark.h"
 #include <hcomm_res.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -24,8 +25,6 @@ constexpr uint16_t CONTROL_PORT = 19516; // 与已有 demo 的19515隔离。
 // 本分支尚未把插件监听端口查询接入 HcommEndpointGetListenPort。
 // 通过标准 HcommChannelDesc::port 显式指定端口，由 hcomm 创建监听 socket。
 constexpr uint16_t HCOMM_LISTEN_PORT = 19517;
-constexpr size_t BUFFER_BYTES = 4096;
-constexpr char PAYLOAD[] = "hello rdma demo";
 
 inline void Require(bool ok, const char *operation)
 {

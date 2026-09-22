@@ -1,0 +1,96 @@
+{
+  "kernel": "StandardReadKernel",
+  "warmup": 10,
+  "measured_rounds": 100,
+  "application": {
+    "submit_us": {
+      "count": 100,
+      "mean_us": 1825.907,
+      "p50_us": 1771.76,
+      "p95_us": 2008.84,
+      "p99_us": 2024.74,
+      "min_us": 1709.22,
+      "max_us": 2025.5
+    },
+    "launch_stream_us": {
+      "count": 100,
+      "mean_us": 1922.05922,
+      "p50_us": 1883.877,
+      "p95_us": 2102.386,
+      "p99_us": 2112.007,
+      "min_us": 1792.514,
+      "max_us": 2114.657
+    },
+    "completion_wait_us": {
+      "count": 100,
+      "mean_us": 50.10674,
+      "p50_us": 42.632,
+      "p95_us": 58.882,
+      "p99_us": 231.789,
+      "min_us": 23.771,
+      "max_us": 514.051
+    },
+    "host_complete_us": {
+      "count": 100,
+      "mean_us": 1972.16596,
+      "p50_us": 1927.789,
+      "p95_us": 2153.498,
+      "p99_us": 2324.935,
+      "min_us": 1835.635,
+      "max_us": 2423.039
+    }
+  },
+  "sha256": {
+    "build/base-final-profile-a3.log": "7d632d303d1cbe571fff7e34493090c0badf59a22b053c452cb736fd6bf4ea19",
+    "build/base-final-profile-profile/PROF_000001_20260922150321433_00139817BFFNJJPE/mindstudio_profiler_output/task_time_20260922150337.csv": "f6bdf6723f4ee1f4f850ca82e7b7c87afc99e9f6e8e664be1c600eb2f26a73f4",
+    "build/base-final-profile-profile/PROF_000001_20260922150321433_00139817BFFNJJPE/mindstudio_profiler_output/aicpu_20260922150338.csv": "b27053acd5d1cfec37fbda0709e16e84222f119ce587b65a33a2cefc59f25e11"
+  },
+  "profiling": {
+    "kernel_task": {
+      "count": 100,
+      "mean_us": 1867.97829,
+      "p50_us": 1803.864,
+      "p95_us": 2046.179,
+      "p99_us": 2062.538,
+      "min_us": 1742.085,
+      "max_us": 2062.998
+    },
+    "aicpu_task": {
+      "count": 100,
+      "mean_us": 1826.38833,
+      "p50_us": 1772.085,
+      "p95_us": 2009.5,
+      "p99_us": 2025.479,
+      "min_us": 1709.526,
+      "max_us": 2026.0
+    },
+    "aicpu_total": {
+      "count": 100,
+      "mean_us": 1853.48681,
+      "p50_us": 1789.964,
+      "p95_us": 2031.279,
+      "p99_us": 2047.959,
+      "min_us": 1728.825,
+      "max_us": 2048.239
+    },
+    "communication_task_span": {
+      "count": 100,
+      "mean_us": 1710.25267,
+      "p50_us": 1670.647,
+      "p95_us": 1876.542,
+      "p99_us": 2076.018,
+      "min_us": 1577.928,
+      "max_us": 2170.597
+    },
+    "kernel_start_to_completion_record": {
+      "count": 100,
+      "mean_us": 1894.60714,
+      "p50_us": 1833.024,
+      "p95_us": 2069.039,
+      "p99_us": 2267.215,
+      "min_us": 1759.645,
+      "max_us": 2381.832
+    }
+  }
+}
+

@@ -17,12 +17,11 @@ int main()
         EndpointDesc desc = MakeEndpoint(false);
         EndpointHandle endpoint = nullptr;
         CHECK_API(HcommEndpointCreate(&desc, &endpoint));
-        Stage("2. 分配并注册 Host DRAM，填入唯一被测字符串");
+        Stage("2. 分配并注册离散源池；每轮填入包含轮次和块编号的数据");
         void *dram = nullptr;
-        Require(posix_memalign(&dram, BUFFER_BYTES, BUFFER_BYTES) == 0, "allocate Host DRAM");
-        memset(dram, 0, BUFFER_BYTES);
-        memcpy(dram, PAYLOAD, sizeof(PAYLOAD));
-        CommMem memory{COMM_MEM_TYPE_HOST, dram, BUFFER_BYTES};
+        Require(posix_memalign(&dram, 4096, SOURCE_BYTES) == 0, "allocate Host DRAM");
+        memset(dram, 0, SOURCE_BYTES); // 预触页不在测量区间内。
+        CommMem memory{COMM_MEM_TYPE_HOST, dram, SOURCE_BYTES};
         HcommMemHandle registration = nullptr;
         CHECK_API(HcommMemReg(endpoint, "host-dram", &memory, &registration));
         void *description = nullptr;
@@ -44,6 +43,21 @@ int main()
 
         Stage("5. 保持 DRAM/MR 有效，等待 NPU 完成 READ 和数据验证");
         // 本端是 RDMA READ responder，不需要再发送一个 READ，也不通过 TCP 发送 payload。
+        uint32_t expectedGeneration = 1;
+        for (;;) {
+            uint32_t wireGeneration = 0;
+            Transfer(control, &wireGeneration, sizeof(wireGeneration), false);
+            uint32_t generation = ntohl(wireGeneration);
+            if (generation == 0) break;
+            Require(generation == expectedGeneration++, "round generation mismatch");
+            for (uint32_t block = 0; block < BLOCK_COUNT; ++block) {
+                auto *source = static_cast<unsigned char *>(dram) + SourceOffset(block, generation);
+                for (uint32_t byte = 0; byte < BLOCK_BYTES; ++byte)
+                    source[byte] = PayloadByte(block, byte, generation);
+            }
+            // CPU 源数据准备好后再回复；下一轮请求只会在 NPU 完成同步和校验后到达。
+            Transfer(control, &wireGeneration, sizeof(wireGeneration), true);
+        }
         Barrier(control, true, 2);
         puts("PASS: NPU confirmed standard HCOMM READ and HBM validation");
 

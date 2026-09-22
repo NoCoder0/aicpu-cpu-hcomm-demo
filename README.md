@@ -1,186 +1,88 @@
-# AICPU ↔ CPU 标准 hcomm RDMA READ demo
+# AICPU ↔ CPU 标准 hcomm：1600 × 656 B 离散 READ
 
-在独立 CANN 9.1 容器内，用公开 `Hcomm*` 接口建链，由 AICPU 调用
-`HcommReadOnThread` 将 Host DRAM 的16字节读取到 NPU HBM，并检查其余4080字节哨兵。
-这是单段 READ（最小单 SGE），不代表已验证多 SGE、最大 SGL、性能或压力场景。
+每轮从鲲鹏 Host DRAM 的 262144 段源池选取1600个不同数据块，每块656字节，总有效数据量 **1,049,600字节**，写入 A3 HBM 的离散目标槽。目标步长1312字节，前后各4096字节保护区。逻辑数据块数、Hcomm调用数、TS任务数和网络线上报文数是不同概念。
 
-- Demo：[NoCoder0/aicpu-cpu-hcomm-demo / feat/aicpu-cpu-rdma-demo](https://github.com/NoCoder0/aicpu-cpu-hcomm-demo/tree/feat/aicpu-cpu-rdma-demo)。
-- hcomm：[NoCoder0/hcomm / feat/aicpu-cpu-rdma](https://github.com/NoCoder0/hcomm/tree/feat/aicpu-cpu-rdma)，
-  固定提交 `33d156bf832744a4f767144149ed1b2e304ff2e3`，基于原分支 `feat/aicpu-urma-design` 的
-  `64ef7f9e05964add831d976876ce54adb74cd286`，包含 Host/A3 兼容修改。
-- hcomm 修改已在独立仓库提交；本仓通过 `reference/hcomm` 子模块引用，不需要再应用 patch。
-- 回归结果见 [VALIDATION.md](VALIDATION.md)。
+最初16字节跑通基线保留在提交 `110809f97b83c896cdb6d947acd458ca444f1988`，历史记录见 [VALIDATION.md](VALIDATION.md)。当前测量记录见 [BENCHMARK_VALIDATION.md](BENCHMARK_VALIDATION.md)。
 
-## 最小文件集与审阅入口
+## 审阅入口
 
-| 文件 | 用途 |
-|---|---|
-| `npu_reader.cpp` | A3 控制程序与 AICPU 用户 kernel；直接调用标准 READ/Drain/Batch 接口 |
-| `host_server.cpp` | Host DRAM 注册、标准建链、等待读取和校验完成 |
-| `common.h` | 双端 IP、NPU ID、端口、opaque MR 交换及 Channel 创建 |
-| `standard_read.json` | ACL 用户 kernel 加载配置 |
-| `build.sh` / `deploy.sh` / `run.sh` | 容器内构建 hcomm、部署库并编译 demo、运行 |
-| `tests/` | 链接实际 hcomm/插件的5项兼容回归测试 |
-| `reference/hcomm` | 固定版本的 hcomm 子模块 |
+- `npu_reader.cpp`：同一文件编译 A3 主机控制程序和 AICPU `StandardReadKernel`，直接调用标准接口。
+- `host_server.cpp`：Host源池注册、建链、每轮准备数据并保持 MR 有效。
+- `common.h`：Endpoint、Mem、Channel公开接口和管理TCP握手。
+- `benchmark.h`：两端统一的数据布局、离散地址排列、逐轮变化的数据模式。
+- `profile.sh` / `analyze_profile.py`：采集、退出码检查、算子与通信任务统计。
+- `reference/hcomm`：固定 `33d156bf832744a4f767144149ed1b2e304ff2e3`；本轮基础实现没有修改子模块。
 
-旧 RA demo、旧 full_hcomm 实现、旧环境试验和日志不在当前文件树中；历史提交仍保留。
-编译产物、运行日志和部署 SHA256 清单均生成在 `build/`，不提交到 Git。
+## 建链与完成条件
 
-## 建链与读取流程
+1. Host创建 HOST/ROCE Endpoint；A3初始化ACL、选择设备2，创建 DEVICE/ROCE Endpoint。
+2. 分配DRAM/HBM，调用 `HcommMemReg` / `HcommMemExport`；管理TCP交换opaque描述符。A3用 `HcommMemImport` 导入Host源池。
+3. `HcommChannelCreate` / `HcommChannelGetStatus` 推进两端至READY。应用不解析rkey、QPN等私有信息。
+4. A3通过 `HcommThreadAlloc(COMM_ENGINE_AICPU_TS, ...)` 创建通信线程。
+5. 每轮Host先填充本轮所选数据，再经管理TCP确认源数据可读；该准备过程在测量区间外。
+6. AICPU执行 `BatchStart → 1600 × HcommReadOnThread → HcommChannelDrainOnThread → HcommAclrtNotifyRecordOnThread → BatchEnd`。公开批量模式不承诺只在End时提交，库内部可以提前下发。
+7. A3同步kernel流，通过 `aclrtWaitAndResetNotify` 等待Drain后记录的通知，再同步完成流。**仅同步kernel流或调用 `aclrtSynchronizeDevice` 不能替代这条显式完成依赖。**
+8. 回拷HBM，逐字节校验所有payload、段间间隙和前后保护区。每轮地址和内容随generation变化，避免旧数据误通过。通过后才准备下一轮。
+9. 最后一轮校验成功后通知Host，按线程、通道、MR、内存的顺序清理。未知完成状态下不提前注销MR。
 
-```text
-Host3：CPU / HOST-ROCE                    A3：AICPU_TS / DEVICE-ROCE
-HcommEndpointCreate                      aclInit / aclrtSetDevice(2)
-                                         HcommEndpointCreate
-分配 DRAM，填入 hello rdma demo           分配4096字节 HBM，填充0xa5
-HcommMemReg / HcommMemExport              HcommMemReg / HcommMemExport
-           ← 管理 TCP:19516 交换 opaque 描述符和端口 →
-                                         HcommMemImport（Host DRAM）
-HcommChannelDescInit                      HcommChannelDescInit
-HcommChannelCreate(CPU, SERVER)           HcommChannelCreate(AICPU_TS, CLIENT)
-           ← hcomm 内部 TCP:19517 白名单、能力、资源交换与 QP 建链 →
-HcommChannelGetStatus == READY            HcommChannelGetStatus == READY
-           ← 管理 TCP 确认两端 READY →
-保持源 MR 有效                           HcommThreadAlloc(AICPU_TS)
-                                         ACL 启动 StandardReadKernel
-                                         HcommBatchModeStart
-                                         HcommReadOnThread（16字节）
-     Host DRAM ===== RDMA READ ======>   NPU HBM
-                                         HcommChannelDrainOnThread
-                                         HcommBatchModeEnd（提交任务）
-                                         同步 kernel stream 与 ACL device
-                                         HBM 回拷，仅作结果验证
-           ← 校验通过确认 →
-销毁 Channel、注销 MR                     释放 Thread、Channel、MR、HBM
-```
+源地址用固定可复现的排列生成，与UB参考测试采用相同源池规模；这不声称复现了参考脚本的随机分布。源数据生成、清零、参数上传、校验、建链均在计时区间外。逐轮校验与数据准备会影响缓存状态，结果不是无校验的饱和带宽测试。
 
-建链由 `HcommChannelCreate` 内部完成；应用不调用 RA 或 libibverbs、不手工交换 QPN/PSN，
-不解析 MR 描述符中的 rkey。管理 TCP 不传 payload。Host 只作 READ responder，无须导入对端 HBM。
+## 环境及复现
 
-此分支的插件 Endpoint 不支持 `HcommEndpointGetListenPort`，因此用公开 `HcommChannelDesc.port`
-显式指定19517；实际监听和 QP 状态推进仍由 hcomm 完成。此版本也没有公开 `HcommThreadResGetInfo`，
-因此使用 `aclrtSynchronizeDevice()` 等待已提交的通信任务，不解引用私有线程句柄。
-READ、Drain 返回0仅表明调用成功，必须检查 BatchEnd、同步、数据内容和完整清理结果。
-
-## 环境与准备
-
-| 角色 | 管理 IP | RDMA IP / 设备 | 本任务独立容器 |
+| 角色 | 管理IP | RDMA地址 / 设备 | 独立容器 |
 |---|---|---|---|
-| A3 D | 10.1.101.201 | 20.168.0.3 / device 2 | rdma-hcomm-cann91 |
-| Host3 | 10.1.101.27 | 20.168.0.19 / mlx5_2，enp165s0f0np0 | rdma-hcomm-host-cann91 |
+| A3 D | 10.1.101.201 | 20.168.0.3 / 物理设备2 | rdma-hcomm-cann91 |
+| Host3 | 10.1.101.27 | 20.168.0.19 / mlx5_2 / enp165s0f0np0 | rdma-hcomm-host-cann91 |
 
-容器由各自 hhy 的 CANN 9.1 环境复制，已存在时直接复用。所有编译、部署和执行在这些独立
-容器内进行。`deploy.sh` 会替换目标容器内的 CANN hcomm 库与 A3 kernel 包。
-容器需能访问 RDMA 设备，A3 还需能访问 NPU、匹配的驱动及 HCCP；现场容器采用 host 网络。
-宿主机只用于容器管理、SSH 和只读网络诊断。
-
-容器依赖：AArch64 Linux、CANN `/usr/local/Ascend/cann-9.1.0`（含 hcc 设备编译器）、
-g++、CMake、make、Python3、git、binutils、RDMA 开发库及 hcomm 上游构建依赖。
-测试另需 `/usr/src/googletest/googletest` 源码，以相同旧 C++ string ABI 编译。
-`CANN` 可覆盖安装路径，`JOBS` 可调整构建并行度（默认16）。两端使用相同的子模块提交。
-
-Host3 已验证加载 CANN 自带的 `devlib/aarch64/libascend_hal.so`，未编写 HAL 替代实现。
-此结果不意味着任意未安装 CANN/HAL 的裸 CPU 环境可直接运行。
-
-### 1. 每次运行前检查双向 RDMA 网络
+只使用上述独立容器，工作目录 `/workspace/aicpu-cpu-hcomm-demo`，CANN `/usr/local/Ascend/cann-9.1.0`。Host侧依赖已有CANN/HAL环境，不能推定任意裸CPU环境可用。控制端口19516、HCOMM监听端口19517。正式运行前在宿主机复查：
 
 ```bash
-# A3 宿主机
+# A3
 /usr/local/Ascend/driver/tools/hccn_tool -i 2 -ip -g
 /usr/local/Ascend/driver/tools/hccn_tool -i 2 -link -g
-timeout 40 /usr/local/Ascend/driver/tools/hccn_tool -i 2 -ping -g address 20.168.0.19 pkt 64
-# Host3 宿主机
+/usr/local/Ascend/driver/tools/hccn_tool -i 2 -ping -g address 20.168.0.19 pkt 64
+# Host3
 ping -c 3 -W 2 -I 20.168.0.19 20.168.0.3
 ```
 
-必须看到 Link UP，双向各3包收到。网络失败时先确认实际配对；若换卡/Host，修改
-`common.h` 中管理 IP、双方 RDMA IP 和物理 NPU ID，两端重新编译，再检查双向 ping。
-
-### 2. 两端容器中分别拉取同一版本
+两端容器使用相同源码和子模块提交。初次构建：Host执行 `bash build.sh host`，A3执行 `bash build.sh a3`。hcomm未改动且已构建时，可直接重新部署应用：
 
 ```bash
-# 宿主机：如容器停止，先 docker start <容器名>，然后进入容器
-# Host3：docker exec -it rdma-hcomm-host-cann91 bash
-# A3：   docker exec -it rdma-hcomm-cann91 bash
-cd /workspace
-GIT_LFS_SKIP_SMUDGE=1 git clone --branch feat/aicpu-cpu-rdma-demo \
-  --recurse-submodules --shallow-submodules \
-  https://github.com/NoCoder0/aicpu-cpu-hcomm-demo.git
-cd aicpu-cpu-hcomm-demo
-git submodule status
-# 应为 33d156bf...；不要使用 submodule update --remote 漂移到其他版本。
+# Host3容器
+bash deploy.sh host
+# A3容器
+bash deploy.sh a3
 ```
 
-LFS 跳过的是上游文档图片等资料，demo 不依赖它们；构建依赖按上游脚本下载，需要相应网络或缓存。
-已有检出目录更新时使用 `git pull --ff-only` 后执行 `GIT_LFS_SKIP_SMUDGE=1 git submodule update --init --recursive`。
-
-本次现场回归复用各容器已有的第三方依赖缓存（不复制 hcomm 的 `build/` 或 `build_out/`）：
+部署会替换独立容器内hcomm库和AICPU kernel包。每步需退出0后继续。库构建使用Debug模式以保留Host插件所需符号；应用和用户kernel用 `-O2 -Wall -Wextra -Werror`。性能运行默认关闭stdout内部日志，日志级别ERROR；可通过环境变量覆盖。
 
 ```bash
-# 两端容器，新仓库根目录；仅当此旧缓存存在时使用。
-mkdir -p reference/hcomm/third_party
-cp -a /workspace/nocoder/source/third_party/. reference/hcomm/third_party/
-export JOBS=32
+# 先启动Host3；等待Control listening
+bash run.sh host > build/host.log 2>&1
+# A3：100轮测量，10轮预热，每轮都校验
+bash run.sh a3 100 10 > build/a3.log 2>&1
+# profiling需重新启动一次Host，输出目录必须不存在
+bash profile.sh build/profile-new 100 10 > build/profile-a3.log 2>&1
+# 汇总（profile目录指向msprof导出的mindstudio_profiler_output）
+python3 analyze_profile.py build/profile-a3.log --profile build/profile-new/PROF_xxx/mindstudio_profiler_output --output build/profile-summary.json
+python3 analyze_profile.py build/a3.log --output build/plain-summary.json
 ```
 
-没有该缓存时需按 hcomm 构建说明准备第三方依赖及下载网络；不能将旧编译产物当作本次回归结果。
+必须检查**两端退出0、所有轮校验通过、采集样本数匹配**。本机msprof可能在应用失败后仍返回0，因此 `profile.sh` 额外记录和检查 `application.exit`。
 
-### 3. 分别构建与部署
+## 计时口径
 
-```bash
-# Host3 容器，仓库根目录
-set -o pipefail
-mkdir -p build
-bash build.sh host 2>&1 | tee build/hcomm.log
-bash deploy.sh host 2>&1 | tee build/deploy.log
+| 指标 | 范围 |
+|---|---|
+| `submit_us` | AICPU内部从BatchStart前到BatchEnd返回后的API生成/提交时间，不能当作纯通信完成时间 |
+| `launch_stream_us` | 主机调用Launch到kernel流同步返回，包含下发、调度和kernel执行 |
+| `completion_wait_us` | 随后在ACL流等待并消费完成通知的主机经过时间 |
+| `host_complete_us` | 上述两个主机区间之和；不含建链、准备与校验 |
+| msprof `kernel_task` | `task_time.csv` 中 StandardReadKernel 的任务时间 |
+| msprof `aicpu_task` / `aicpu_total` | `aicpu.csv` 同名kernel的Task_time / Total_time，保留工具原口径 |
+| `communication_task_span` | 首个通信WRITE_VALUE_SQE开始到Drain后NOTIFY_RECORD_SQE结束；包括后续任务尚未生成的间隔和通知开销，不是线速传输时间 |
+| `kernel_start_to_completion_record` | 同一设备时间线中，kernel任务开始到通信完成Record结束 |
 
-# A3 容器，仓库根目录
-set -o pipefail
-mkdir -p build
-bash build.sh a3 2>&1 | tee build/hcomm.log
-bash deploy.sh a3 2>&1 | tee build/deploy.log
-```
+算子执行与通信任务可以重叠，不能将两者相加。只在同一时钟域内相减；跨主机阶段均各自测量。统计使用10轮预热后100轮样本，分位数采用nearest-rank，不以阶段均值相加替代实测E2E。
 
-每条命令必须退出0后继续。Host 构建 `--pkg --experimental`；A3 额外 `--full`。
-均使用 Debug 构建以提供此分支 experimental 插件需要的动态符号。
-部署时只去除调试段；A3 用户 kernel 与同次构建的设备库一起打包，重建 `bin_hash.cfg`。
-部署清单为 `build/deployed_libraries.json`，hcomm 构建退出码为 `build/hcomm.exit`。
-
-### 4. 先 Host、后 A3，在两个终端运行
-
-```bash
-# Host3 容器，仓库根目录。等待输出 Control listening 后启动 A3。
-set -o pipefail
-bash run.sh host 2>&1 | tee build/host.log
-rc=${PIPESTATUS[0]}; echo "$rc" > build/host.exit; test "$rc" -eq 0
-
-# A3 容器，仓库根目录
-set -o pipefail
-bash run.sh a3 2>&1 | tee build/a3.log
-rc=${PIPESTATUS[0]}; echo "$rc" > build/a3.exit; test "$rc" -eq 0
-```
-
-程序总超时300秒，建链超时120秒。需同时满足：
-
-- 双方 Channel 状态 READY（日志 `CHANNEL status=0`）。
-- A3 的 BatchStart、Read、Drain、BatchEnd 以及 ACL 同步返回0。
-- A3 输出 `PASS: standard HcommReadOnThread HBM='hello rdma demo', bytes=16, guards=4080 unchanged`。
-- Host 输出 `PASS: NPU confirmed standard HCOMM READ and HBM validation`。
-- 双方清理完成，两个退出码文件均为0；不能仅凭 READ 返回0判断传输成功。
-
-### 5. Host3 容器兼容回归
-
-```bash
-source /usr/local/Ascend/cann-9.1.0/set_env.sh
-python3 tests/run.py
-python3 tests/run.py --plugin
-```
-
-第一条3项测试覆盖 MR 描述符和 socket tag，第二条2项覆盖资源报文格式及非法输入。
-测试不发起 RDMA，不能替代上面的双节点 HBM 实测。
-
-## hcomm 兼容修改范围
-
-修复 Host MR 描述符导入、两端 socket tag、Host RA 动态符号/白名单初始化，以及 A3/Host
-资源通道的109字节 Drain 报文匹配。公开接口和 READ 数据原语未修改；应用不调用 RA/verbs。
-Host 资源模式限定为1 QP、0用户 notify。不支持的资源形状明确返回错误。
+兼容测试仍可在Host容器运行 `python3 tests/run.py` 和 `python3 tests/run.py --plugin`；它们不替代HBM实测。所有原始日志、profiling和部署清单留在 `build/`，不提交大型产物或凭据。

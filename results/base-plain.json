@@ -1,0 +1,46 @@
+{
+  "kernel": "StandardReadKernel",
+  "warmup": 10,
+  "measured_rounds": 100,
+  "application": {
+    "submit_us": {
+      "count": 100,
+      "mean_us": 1763.1866,
+      "p50_us": 1730.3,
+      "p95_us": 1926.72,
+      "p99_us": 1947.68,
+      "min_us": 1639.44,
+      "max_us": 1948.34
+    },
+    "launch_stream_us": {
+      "count": 100,
+      "mean_us": 1856.51337,
+      "p50_us": 1822.125,
+      "p95_us": 2021.613,
+      "p99_us": 2045.754,
+      "min_us": 1724.801,
+      "max_us": 2060.745
+    },
+    "completion_wait_us": {
+      "count": 100,
+      "mean_us": 56.19351,
+      "p50_us": 54.162,
+      "p95_us": 70.433,
+      "p99_us": 93.784,
+      "min_us": 33.411,
+      "max_us": 203.908
+    },
+    "host_complete_us": {
+      "count": 100,
+      "mean_us": 1912.70688,
+      "p50_us": 1899.738,
+      "p95_us": 2072.375,
+      "p99_us": 2104.427,
+      "min_us": 1789.614,
+      "max_us": 2119.387
+    }
+  },
+  "sha256": {
+    "build\\base-final-plain\\a3.log": "031313f89a97880386f21300f8afc4be63fc7ae9974717403ba060be2e984e44"
+  }
+}
