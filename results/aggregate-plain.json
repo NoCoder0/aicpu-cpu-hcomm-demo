@@ -1,0 +1,112 @@
+{
+  "kernel": "AggregateKernel",
+  "warmup": 10,
+  "measured_rounds": 100,
+  "application": {
+    "request_us": {
+      "count": 100,
+      "mean_us": 18.3964,
+      "p50_us": 18.16,
+      "p95_us": 22.34,
+      "p99_us": 25.84,
+      "min_us": 13.92,
+      "max_us": 27.06
+    },
+    "wait_host_us": {
+      "count": 100,
+      "mean_us": 72.673,
+      "p50_us": 72.54,
+      "p95_us": 73.5,
+      "p99_us": 76.86,
+      "min_us": 71.14,
+      "max_us": 80.86
+    },
+    "scatter_us": {
+      "count": 100,
+      "mean_us": 142.8514,
+      "p50_us": 142.06,
+      "p95_us": 148.62,
+      "p99_us": 151.52,
+      "min_us": 139.16,
+      "max_us": 151.88
+    },
+    "kernel_e2e_us": {
+      "count": 100,
+      "mean_us": 233.92079999999999,
+      "p50_us": 233.18,
+      "p95_us": 241.56,
+      "p99_us": 243.02,
+      "min_us": 227.16,
+      "max_us": 243.14
+    },
+    "launch_stream_us": {
+      "count": 100,
+      "mean_us": 312.79382,
+      "p50_us": 308.122,
+      "p95_us": 335.304,
+      "p99_us": 345.715,
+      "min_us": 286.801,
+      "max_us": 543.123
+    },
+    "completion_wait_us": {
+      "count": 100,
+      "mean_us": 42.1357,
+      "p50_us": 40.762,
+      "p95_us": 55.263,
+      "p99_us": 59.472,
+      "min_us": 33.782,
+      "max_us": 70.113
+    },
+    "host_complete_us": {
+      "count": 100,
+      "mean_us": 354.92952,
+      "p50_us": 349.424,
+      "p95_us": 386.596,
+      "p99_us": 401.057,
+      "min_us": 329.743,
+      "max_us": 602.595
+    }
+  },
+  "sha256": {
+    "build\\aggregate-final-plain\\a3.log": "c79645f504a9739a6e4376d671dc3de5dd1509d9ead5fb3deeeed812f77d148c",
+    "build\\aggregate-final-plain\\host.log": "11c85501b635b329c29eaf93c0373eeaa9fb5f2ee3c5aee3129a4b7c89717a38"
+  },
+  "host_application": {
+    "gather_us": {
+      "count": 100,
+      "mean_us": 15.38365,
+      "p50_us": 15.29,
+      "p95_us": 16.131,
+      "p99_us": 18.39,
+      "min_us": 13.54,
+      "max_us": 19.79
+    },
+    "write_us": {
+      "count": 100,
+      "mean_us": 47.45062,
+      "p50_us": 47.331,
+      "p95_us": 47.51,
+      "p99_us": 50.991,
+      "min_us": 47.071,
+      "max_us": 55.951
+    },
+    "ready_us": {
+      "count": 100,
+      "mean_us": 3.78524,
+      "p50_us": 3.78,
+      "p95_us": 3.96,
+      "p99_us": 4.0,
+      "min_us": 3.54,
+      "max_us": 4.26
+    },
+    "service_us": {
+      "count": 100,
+      "mean_us": 68.21743,
+      "p50_us": 68.111,
+      "p95_us": 68.951,
+      "p99_us": 72.131,
+      "min_us": 66.451,
+      "max_us": 76.281
+    }
+  }
+}

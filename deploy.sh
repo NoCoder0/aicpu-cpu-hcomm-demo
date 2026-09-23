@@ -33,12 +33,14 @@ flags=(-std=c++14 -D_GLIBCXX_USE_CXX11_ABI=0 -O2 -Wall -Wextra -Werror
        -I"$PWD/reference/hcomm/include" -I"$CANN/include")
 libs=(-L"$CANN/lib64" -Wl,-rpath,"$CANN/lib64" -Wl,-rpath-link,"$CANN/lib64")
 g++ "${flags[@]}" host_server.cpp "${libs[@]}" -lhcomm -lc_sec -ldl -pthread -o build/host_server
+g++ "${flags[@]}" aggregate_host.cpp "${libs[@]}" -lhcomm -lc_sec -ldl -pthread -o build/aggregate_host
 if [ "$role" = host ]; then exit 0; fi
 test "$role" = a3
 g++ "${flags[@]}" npu_reader.cpp "${libs[@]}" -lhcomm -lascendcl -lc_sec -ldl -pthread -o build/npu_reader
+g++ "${flags[@]}" aggregate_npu.cpp "${libs[@]}" -lhcomm -lascendcl -lc_sec -ldl -pthread -o build/aggregate_npu
 device="$PWD/reference/hcomm/build/device_build"
 "$CANN/toolkit/toolchain/hcc/bin/aarch64-target-linux-gnu-g++" "${flags[@]}" \
-    -DSTANDARD_HCOMM_AICPU -shared -fPIC npu_reader.cpp \
+    -DSTANDARD_HCOMM_AICPU -shared -fPIC npu_reader.cpp aggregate_kernel.cpp \
     -L"$device/src/legacy/ascend910/framework" -Wl,-z,defs -Wl,-rpath,'$ORIGIN' \
     -lccl_kernel -o build/libstandard_read_kernel.so
 python3 - <<'PY'

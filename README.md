@@ -1,8 +1,8 @@
-# AICPU ↔ CPU 标准 hcomm：1600 × 656 B 离散 READ
+# AICPU ↔ CPU 标准 hcomm：1600 × 656 B 离散 READ 与 Host 聚合
 
 每轮从鲲鹏 Host DRAM 的 262144 段源池选取1600个不同数据块，每块656字节，总有效数据量 **1,049,600字节**，写入 A3 HBM 的离散目标槽。目标步长1312字节，前后各4096字节保护区。逻辑数据块数、Hcomm调用数、TS任务数和网络线上报文数是不同概念。
 
-最初16字节跑通基线保留在提交 `110809f97b83c896cdb6d947acd458ca444f1988`，历史记录见 [VALIDATION.md](VALIDATION.md)。当前测量记录见 [BENCHMARK_VALIDATION.md](BENCHMARK_VALIDATION.md)。
+最初16字节跑通基线保留在提交 `110809f97b83c896cdb6d947acd458ca444f1988`，历史记录见 [VALIDATION.md](VALIDATION.md)。1600块基础READ及首次profiling已提交为 `c755392`，记录见 [BENCHMARK_VALIDATION.md](BENCHMARK_VALIDATION.md)。随后实现的聚合方案、修复和对照结果见 [AGGREGATE_VALIDATION.md](AGGREGATE_VALIDATION.md)。
 
 ## 审阅入口
 
@@ -11,7 +11,10 @@
 - `common.h`：Endpoint、Mem、Channel公开接口和管理TCP握手。
 - `benchmark.h`：两端统一的数据布局、离散地址排列、逐轮变化的数据模式。
 - `profile.sh` / `analyze_profile.py`：采集、退出码检查、算子与通信任务统计。
-- `reference/hcomm`：固定 `33d156bf832744a4f767144149ed1b2e304ff2e3`；本轮基础实现没有修改子模块。
+- `aggregate_kernel.cpp` / `aggregate_npu.cpp`：AICPU发送地址表、等待Host写回、6 lane scatter及逐轮校验。
+- `aggregate_host.cpp` / `gather_pool.h`：16个常驻Host worker按收到的地址gather，标准Hcomm连续写回。
+- `aggregate_protocol.h`：两端暂存区、请求表、doorbell/ready及共享参数布局。
+- `reference/hcomm`：固定到 `d336953a180e83b556d60e5d5c1ca18d6922f5ba`（`NoCoder0/hcomm` 的 `feat/aicpu-cpu-rdma` 分支），已包含聚合写回所需的修复。demo不再维护hcomm补丁，使用 `git submodule update --init --recursive` 获取固定版本。
 
 ## 建链与完成条件
 
@@ -45,7 +48,14 @@
 ping -c 3 -W 2 -I 20.168.0.19 20.168.0.3
 ```
 
-两端容器使用相同源码和子模块提交。初次构建：Host执行 `bash build.sh host`，A3执行 `bash build.sh a3`。hcomm未改动且已构建时，可直接重新部署应用：
+两端容器必须使用相同源码及hcomm修复。初次构建：Host执行 `bash build.sh host`，A3执行 `bash build.sh a3`。已有构建时，聚合新增的Host插件修复需要先在两端执行：
+
+```bash
+source /usr/local/Ascend/cann-9.1.0/set_env.sh
+cmake --build reference/hcomm/build --target hcomm_cpu_roce_plugin -j16
+```
+
+构建成功后部署库和应用；仅应用变化时可直接部署：
 
 ```bash
 # Host3容器
@@ -69,6 +79,31 @@ python3 analyze_profile.py build/a3.log --output build/plain-summary.json
 ```
 
 必须检查**两端退出0、所有轮校验通过、采集样本数匹配**。本机msprof可能在应用失败后仍返回0，因此 `profile.sh` 额外记录和检查 `application.exit`。
+
+## 聚合版运行
+
+聚合采用参考任务《审查 memfabric sparse_copy-UB聚合》的四阶段流程：AICPU经Hcomm发送地址表和doorbell；Host验证实际收到的地址表，16 worker gather；Host连续写回1,049,600字节并等待Fence，再写8字节ready；6个AICPU lane失效scratch缓存后scatter并clean目标。管理TCP仅做建链、源数据准备确认及最终验收，不传payload。
+
+以下CPU编号仅对应当前Host3（网卡NUMA 2）。基础READ对照也用服务CPU224；gather worker分别绑定192、194、…、222。
+
+```bash
+# Host3容器，先启动并等待Control listening
+export HCOMM_BENCHMARK_MODE=aggregate
+export HCOMM_HOST_CPU=224
+export HCOMM_GATHER_CPUS=192,194,196,198,200,202,204,206,208,210,212,214,216,218,220,222
+taskset -c 224 bash run.sh host > build/aggregate-host.log 2>&1
+# A3容器，无profiling
+export HCOMM_BENCHMARK_MODE=aggregate
+bash run.sh a3 100 10 > build/aggregate-a3.log 2>&1
+# 或：重新启动Host后采集profiling
+bash profile.sh build/aggregate-profile-new 100 10 > build/aggregate-profile-a3.log 2>&1
+python3 analyze_profile.py build/aggregate-profile-a3.log --kernel AggregateKernel \
+  --host-log build/aggregate-host.log \
+  --profile build/aggregate-profile-new/PROF_xxx/mindstudio_profiler_output \
+  --output build/aggregate-summary.json
+```
+
+无profiling汇总时省略`--profile`。切回基础READ时，两端均设置`HCOMM_BENCHMARK_MODE=read`；Host对照命令为`taskset -c 224 bash run.sh host`。
 
 ## 计时口径
 

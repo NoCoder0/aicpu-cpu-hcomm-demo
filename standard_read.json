@@ -1,4 +1,11 @@
 {
+  "AggregateKernel": {
+    "opInfo": {
+      "functionName": "AggregateKernel",
+      "kernelSo": "libstandard_read_kernel.so",
+      "opKernelLib": "AICPUKernel"
+    }
+  },
   "StandardReadKernel": {
     "opInfo": {
       "functionName": "StandardReadKernel",

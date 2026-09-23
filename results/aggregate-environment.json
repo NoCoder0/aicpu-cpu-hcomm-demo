@@ -1,0 +1,85 @@
+{
+  "host": {
+    "remote_head": "110809f97b83c896cdb6d947acd458ca444f1988",
+    "remote_hcomm_head": "33d156bf832744a4f767144149ed1b2e304ff2e3",
+    "binary_sha256": {
+      "/usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so": "86bfdd02aa3ef58ecd349b43efb69207ce18c9d98cbb8ede2b6409b24a1d45a7",
+      "/usr/local/Ascend/cann-9.1.0/hcomm_plugin/libhcomm_cpu_roce_plugin.so": "cb044fd8bf086f6474a7ce3aeed85dbcca1b92a5ac7f12420beed16981a9f56a",
+      "/workspace/aicpu-cpu-hcomm-demo/build/aggregate_host": "a71313fb602c01df3a4a22f24fb2d421166b4e0114d7a886ef0eef26c9006fa5",
+      "/workspace/aicpu-cpu-hcomm-demo/build/host_server": "a9bab99827bb59b549aa5437e8af4ee8e724023511ffbb790b595f06cc32438d"
+    },
+    "all_runtime_sources_match_local": true
+  },
+  "a3": {
+    "remote_head": "110809f97b83c896cdb6d947acd458ca444f1988",
+    "remote_hcomm_head": "33d156bf832744a4f767144149ed1b2e304ff2e3",
+    "binary_sha256": {
+      "/usr/local/Ascend/cann-9.1.0/lib64/libhcomm.so": "ac6429a9f02b879100d63e2fbb6136f796f6715f3c931f2d5a4e0dd084a21958",
+      "/usr/local/Ascend/cann-9.1.0/hcomm_plugin/libhcomm_cpu_roce_plugin.so": "32d372935bf56712896cfe6989c5bd563af42cca6641de25307a9661af1faa96",
+      "/workspace/aicpu-cpu-hcomm-demo/build/aggregate_npu": "a4d4efeb06bcd35ac09908f61445f9a9ef5bb38577d80612e2b48db2ed21910e",
+      "/workspace/aicpu-cpu-hcomm-demo/build/npu_reader": "bf593498d3190fe5d55d97f8ce5c9ae51862af7baa6d1b8eb3e01457dd4e9696",
+      "/workspace/aicpu-cpu-hcomm-demo/build/libstandard_read_kernel.so": "583d8b1cf7d8041aa02c843474c2b0c1cbcdcfd8a0d901e1d9b8f495aece1d17",
+      "/usr/local/Ascend/cann-9.1.0/opp/built-in/op_impl/aicpu/kernel/aicpu_hcomm.tar.gz": "11ab808d3d287c997c20d3fadf65c71ce167bc2a3fa887b70130d60064bfcd31",
+      "/workspace/aicpu-cpu-hcomm-demo/build/aggregate_host": "a71313fb602c01df3a4a22f24fb2d421166b4e0114d7a886ef0eef26c9006fa5",
+      "/workspace/aicpu-cpu-hcomm-demo/build/host_server": "a9bab99827bb59b549aa5437e8af4ee8e724023511ffbb790b595f06cc32438d"
+    },
+    "all_runtime_sources_match_local": true
+  },
+  "source_sha256_lf": {
+    "benchmark.h": "6edbbf9a92123937dcc8e63f7a15aedb45c6ff5ad9c4784a051b183badbe2f41",
+    "common.h": "28fdea400e092c2577c555da6fb2f3b277401be06304ee935c7ef88d7b408017",
+    "npu_reader.cpp": "01c1eabd1b20f7ad7c687e394ca101c192a13785d9c40e5cbb45d4eca194d75f",
+    "host_server.cpp": "60af6a55499e0ccc4c709f1f65ebdeb4d1be64cb9720e7fd2f736e47a67304bd",
+    "aggregate_kernel.cpp": "653a7dd49bf38444de3db5c4412fb6cd847d1331988b5fecc8827db0b19cd5ef",
+    "aggregate_host.cpp": "1c7a837283a9945e548562bbb5116ce3d31955932345ab9c2c66915bf60264ae",
+    "aggregate_npu.cpp": "b3318409764f71a68602ff53e764d3c8f2adbedc9a0b860af4efc6856729fe18",
+    "aggregate_protocol.h": "a1b88f780d4a9416a2ffcf27e993a65260d71257988fe01e489eea6ee753baf1",
+    "gather_pool.h": "a069b39e86fb139b9b06077a0eebb6340e781cb36ad7a3106266349e0c025212",
+    "deploy.sh": "7b7c270dd649ed309fd1c476055625ad7ea23112720c184de2330188664cbf7b",
+    "run.sh": "2c82605c29b7bd1777a11ae81525ed44ed5f68d7dca27400a00dd324672618ac",
+    "profile.sh": "5d6ff2ed0bc6a8ab6863bd536c896ba3521e7a4bb557be8aae06593281ea3671",
+    "standard_read.json": "a8fc473f85f838ccb0a9e8c75a5ed56e9e60d1f5301f045437fb1d4b56eb750a",
+    "tests/resource_wire.cpp": "b01a6214941f8ed5e7916f7823200e3ce201519e347f80935a1afb303a00e39e",
+    "reference/hcomm/experimental/base_comm/channel/host_cpu_roce_channel.cc": "865412c8fea6052009185e1281e86ac771b1facd33fe3ee5a1b9af471bdc3141",
+    "reference/hcomm/experimental/base_comm/channel/host_cpu_roce_channel.h": "6a76908cbaa5d3ca10432f7feb75a4abaf24210a7ad651e63bd763353f60b842",
+    "reference/hcomm/experimental/base_comm/comm_mem/roce_mem.cc": "b458464cf355539117e0101b7dd1632aec826e8aa1e554c872d0b6e62e0f4815",
+    "reference/hcomm/experimental/base_comm/comm_mem/roce_mem.h": "1b8df2e79114da7ce4d268cfe018fa5acda4ac54aaa9026bbc38bbbb4278d0d8"
+  },
+  "baseline_commit": "c755392",
+  "aggregation_state": "uncommitted working tree after baseline commit; includes four experimental hcomm files",
+  "host_affinity": {
+    "service_cpu": 224,
+    "gather_cpus": [
+      192,
+      194,
+      196,
+      198,
+      200,
+      202,
+      204,
+      206,
+      208,
+      210,
+      212,
+      214,
+      216,
+      218,
+      220,
+      222
+    ],
+    "nic_numa_node": 2
+  },
+  "tests": {
+    "aggregate-test-wire.log": "385658044fa2a427e046c0b92add824cb75d06605d128edc3c33a7f72fa9cba2",
+    "aggregate-test-import.log": "b3aef617b4189b697928be7ce4a392403ee2a59ec4481bd87f0942358c7b31a8"
+  },
+  "commit_preparation": {
+    "hcomm_commit": "d336953a180e83b556d60e5d5c1ca18d6922f5ba",
+    "source_adjustments": {
+      "aggregate_npu.cpp": {
+        "change": "Remove trailing blank lines only; runtime logic unchanged.",
+        "sha256_lf": "bea687fbe81593ee2790237732f2d150549f3bfa9753ade979c15c8b5cdb5e95"
+      }
+    }
+  }
+}

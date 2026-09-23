@@ -1,0 +1,144 @@
+{
+  "kernel": "AggregateKernel",
+  "warmup": 10,
+  "measured_rounds": 100,
+  "application": {
+    "request_us": {
+      "count": 100,
+      "mean_us": 20.6466,
+      "p50_us": 19.18,
+      "p95_us": 28.18,
+      "p99_us": 49.52,
+      "min_us": 14.96,
+      "max_us": 50.24
+    },
+    "wait_host_us": {
+      "count": 100,
+      "mean_us": 73.268,
+      "p50_us": 73.14,
+      "p95_us": 74.9,
+      "p99_us": 76.8,
+      "min_us": 69.12,
+      "max_us": 85.22
+    },
+    "scatter_us": {
+      "count": 100,
+      "mean_us": 145.5944,
+      "p50_us": 144.2,
+      "p95_us": 152.46,
+      "p99_us": 155.06,
+      "min_us": 141.48,
+      "max_us": 157.8
+    },
+    "kernel_e2e_us": {
+      "count": 100,
+      "mean_us": 239.509,
+      "p50_us": 237.04,
+      "p95_us": 250.0,
+      "p99_us": 267.18,
+      "min_us": 231.48,
+      "max_us": 269.48
+    },
+    "launch_stream_us": {
+      "count": 100,
+      "mean_us": 321.25237,
+      "p50_us": 314.413,
+      "p95_us": 358.005,
+      "p99_us": 364.335,
+      "min_us": 297.623,
+      "max_us": 373.636
+    },
+    "completion_wait_us": {
+      "count": 100,
+      "mean_us": 39.85433,
+      "p50_us": 31.512,
+      "p95_us": 64.382,
+      "p99_us": 69.123,
+      "min_us": 28.001,
+      "max_us": 71.773
+    },
+    "host_complete_us": {
+      "count": 100,
+      "mean_us": 361.1067,
+      "p50_us": 346.374,
+      "p95_us": 416.237,
+      "p99_us": 430.578,
+      "min_us": 328.583,
+      "max_us": 436.348
+    }
+  },
+  "sha256": {
+    "build\\aggregate-final-profile\\a3.log": "99856181670df56a3ce08aebff87fc634f5890c8a8a38fd004192bb3ba19b9d3",
+    "build\\aggregate-final-profile\\host.log": "db57c9b57cd262f8d00f8eb4b7c88a5fefc49f5e97617e219ead083a8b2fcdb4",
+    "build\\aggregate-final-profile\\profile\\task_time_20260922153325.csv": "4e8bcd6ebe1ddc1179d4273047925726581ad7b11b8b627c0c68cf2270390c40",
+    "build\\aggregate-final-profile\\profile\\aicpu_20260922153325.csv": "2355786c5b4afbc6dfe94cab50c21504be296893c232a99952d732cd9beaf125"
+  },
+  "host_application": {
+    "gather_us": {
+      "count": 100,
+      "mean_us": 16.36355,
+      "p50_us": 16.181,
+      "p95_us": 17.44,
+      "p99_us": 19.74,
+      "min_us": 14.43,
+      "max_us": 27.911
+    },
+    "write_us": {
+      "count": 100,
+      "mean_us": 47.44364,
+      "p50_us": 47.321,
+      "p95_us": 47.551,
+      "p99_us": 50.871,
+      "min_us": 47.121,
+      "max_us": 55.181
+    },
+    "ready_us": {
+      "count": 100,
+      "mean_us": 3.79681,
+      "p50_us": 3.8,
+      "p95_us": 4.0,
+      "p99_us": 4.06,
+      "min_us": 3.5,
+      "max_us": 4.07
+    },
+    "service_us": {
+      "count": 100,
+      "mean_us": 69.23595,
+      "p50_us": 68.971,
+      "p95_us": 70.831,
+      "p99_us": 76.652,
+      "min_us": 66.861,
+      "max_us": 80.862
+    }
+  },
+  "profiling": {
+    "kernel_task": {
+      "count": 100,
+      "mean_us": 267.0994,
+      "p50_us": 264.974,
+      "p95_us": 278.814,
+      "p99_us": 295.934,
+      "min_us": 257.794,
+      "max_us": 297.554
+    },
+    "lanes_per_launch": 6,
+    "aicpu_slowest_lane_task": {
+      "count": 100,
+      "mean_us": 238.3824,
+      "p50_us": 236.575,
+      "p95_us": 248.295,
+      "p99_us": 261.935,
+      "min_us": 231.375,
+      "max_us": 266.375
+    },
+    "aicpu_slowest_lane_total": {
+      "count": 100,
+      "mean_us": 255.32037,
+      "p50_us": 253.315,
+      "p95_us": 266.035,
+      "p99_us": 281.294,
+      "min_us": 247.015,
+      "max_us": 286.074
+    }
+  }
+}

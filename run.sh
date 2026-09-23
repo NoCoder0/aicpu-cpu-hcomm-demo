@@ -17,9 +17,13 @@ role=${1:?usage: run.sh host|a3}
 if [ "$role" = host ]; then
     export HCOMM_HOST_ONLY=1
     export HCOMM_FORCE_HOST_NIC_PLUGIN=1
+    if [ "${HCOMM_BENCHMARK_MODE:-read}" = aggregate ]; then exec ./build/aggregate_host; fi
     exec ./build/host_server
 fi
 test "$role" = a3
 export HCOMM_HOST_ONLY=0
 unset HCOMM_FORCE_HOST_NIC_PLUGIN
+if [ "${HCOMM_BENCHMARK_MODE:-read}" = aggregate ]; then
+    exec ./build/aggregate_npu "$PWD/standard_read.json" "${2:-100}" "${3:-10}"
+fi
 exec ./build/npu_reader "$PWD/standard_read.json" "${2:-100}" "${3:-10}"

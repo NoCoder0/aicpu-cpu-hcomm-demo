@@ -1,0 +1,95 @@
+{
+  "kernel": "StandardReadKernel",
+  "warmup": 10,
+  "measured_rounds": 100,
+  "application": {
+    "submit_us": {
+      "count": 100,
+      "mean_us": 1828.0764,
+      "p50_us": 1771.36,
+      "p95_us": 2018.62,
+      "p99_us": 2031.42,
+      "min_us": 1717.4,
+      "max_us": 2041.32
+    },
+    "launch_stream_us": {
+      "count": 100,
+      "mean_us": 1909.612,
+      "p50_us": 1875.668,
+      "p95_us": 2091.127,
+      "p99_us": 2107.527,
+      "min_us": 1796.334,
+      "max_us": 2111.477
+    },
+    "completion_wait_us": {
+      "count": 100,
+      "mean_us": 30.32988,
+      "p50_us": 28.201,
+      "p95_us": 35.391,
+      "p99_us": 65.162,
+      "min_us": 20.651,
+      "max_us": 216.719
+    },
+    "host_complete_us": {
+      "count": 100,
+      "mean_us": 1939.94188,
+      "p50_us": 1897.849,
+      "p95_us": 2115.727,
+      "p99_us": 2145.638,
+      "min_us": 1818.835,
+      "max_us": 2157.479
+    }
+  },
+  "sha256": {
+    "build\\base-compare-profile\\a3.log": "7e2624694c2eccb3cfb4156dd30df42b8819255c570bcf5aa7af5ea01b63c878",
+    "build\\base-compare-profile\\profile\\task_time_20260922153544.csv": "9253fd5f25ce64dce5cbb58d24ca35640d95889c87fcad3c53c1c05424b803f1",
+    "build\\base-compare-profile\\profile\\aicpu_20260922153544.csv": "98cf6a2634bdc2005867fa7429337aa1fd4fec66d6b74d2c19d027774543c814"
+  },
+  "profiling": {
+    "kernel_task": {
+      "count": 100,
+      "mean_us": 1873.69913,
+      "p50_us": 1812.243,
+      "p95_us": 2057.898,
+      "p99_us": 2068.638,
+      "min_us": 1761.604,
+      "max_us": 2080.818
+    },
+    "aicpu_task": {
+      "count": 100,
+      "mean_us": 1828.52691,
+      "p50_us": 1771.825,
+      "p95_us": 2019.04,
+      "p99_us": 2031.919,
+      "min_us": 1717.726,
+      "max_us": 2041.899
+    },
+    "aicpu_total": {
+      "count": 100,
+      "mean_us": 1858.70688,
+      "p50_us": 1795.804,
+      "p95_us": 2042.859,
+      "p99_us": 2054.219,
+      "min_us": 1745.145,
+      "max_us": 2065.639
+    },
+    "communication_task_span": {
+      "count": 100,
+      "mean_us": 1707.18187,
+      "p50_us": 1678.267,
+      "p95_us": 1884.462,
+      "p99_us": 1893.242,
+      "min_us": 1582.269,
+      "max_us": 1926.241
+    },
+    "kernel_start_to_completion_record": {
+      "count": 100,
+      "mean_us": 1895.11114,
+      "p50_us": 1829.263,
+      "p95_us": 2073.698,
+      "p99_us": 2085.499,
+      "min_us": 1773.165,
+      "max_us": 2125.257
+    }
+  }
+}
