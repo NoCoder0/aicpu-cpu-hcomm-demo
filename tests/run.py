@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 root = Path(__file__).resolve().parents[1]
-source = root / 'reference/hcomm'
+source = root / 'build/hcomm'
 cann = Path(os.environ.get('CANN', '/usr/local/Ascend/cann-9.1.0'))
 plugin = '--plugin' in sys.argv
 flags_file = source / ('build/experimental/base_comm/nic_plugin/CMakeFiles/hcomm_cpu_roce_plugin.dir/flags.make'

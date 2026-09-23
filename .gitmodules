@@ -1,4 +1,0 @@
-[submodule "reference/hcomm"]
-	path = reference/hcomm
-	url = https://github.com/NoCoder0/hcomm.git
-	branch = feat/aicpu-cpu-rdma

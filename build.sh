@@ -10,7 +10,8 @@ export CANN=${CANN:-/usr/local/Ascend/cann-9.1.0}
 source "$CANN/set_env.sh"
 mkdir -p "$work/build"
 trap 'echo $? > "$work/build/hcomm.exit"' EXIT
-cd reference/hcomm
+bash "$work/fetch_hcomm.sh"
+cd "$work/build/hcomm"
 test -f include/hcomm_res.h
 # Host 插件需要此分支 Debug 构建导出的内部符号。
 # 不传 --noclean：每次按源码重新生成构建目录；下载缓存由上游脚本管理。

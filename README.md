@@ -14,7 +14,7 @@
 - `aggregate_kernel.cpp` / `aggregate_npu.cpp`：AICPU发送地址表、等待Host写回、6 lane scatter及逐轮校验。
 - `aggregate_host.cpp` / `gather_pool.h`：16个常驻Host worker按收到的地址gather，标准Hcomm连续写回。
 - `aggregate_protocol.h`：两端暂存区、请求表、doorbell/ready及共享参数布局。
-- `reference/hcomm`：固定到 `d336953a180e83b556d60e5d5c1ca18d6922f5ba`（`NoCoder0/hcomm` 的 `feat/aicpu-cpu-rdma` 分支），已包含聚合写回所需的修复。demo不再维护hcomm补丁，使用 `git submodule update --init --recursive` 获取固定版本。
+- `fetch_hcomm.sh`：直接从 `https://github.com/NoCoder0/hcomm.git` 拉取 `feat/aicpu-cpu-rdma` 分支到 `build/hcomm`，不使用子模块或本地补丁。源码和构建产物均由 `/build/` 忽略规则排除。
 
 ## 建链与完成条件
 
@@ -48,14 +48,22 @@
 ping -c 3 -W 2 -I 20.168.0.19 20.168.0.3
 ```
 
-两端容器必须使用相同源码及hcomm修复。初次构建：Host执行 `bash build.sh host`，A3执行 `bash build.sh a3`。已有构建时，聚合新增的Host插件修复需要先在两端执行：
+Host执行 `bash build.sh host`，A3执行 `bash build.sh a3`。构建脚本会先调用`fetch_hcomm.sh`：首次浅克隆指定分支，之后获取远端更新并仅允许快进；已有本地修改、分支不符或历史分叉时会停止，不覆盖源码。两端需能访问GitHub。
+
+实际拉取的提交写入`build/hcomm-source.commit`，两端构建时应核对此文件一致。历史测量使用的hcomm修复提交是`d336953a180e83b556d60e5d5c1ca18d6922f5ba`，后续构建跟随上述分支最新版本。仅拉取源码可以单独运行：
+
+```bash
+bash fetch_hcomm.sh
+```
+
+已有构建目录且仅需重编Host插件时，在两端执行（更新源码后通常应先完整运行`build.sh`）：
 
 ```bash
 source /usr/local/Ascend/cann-9.1.0/set_env.sh
-cmake --build reference/hcomm/build --target hcomm_cpu_roce_plugin -j16
+cmake --build build/hcomm/build --target hcomm_cpu_roce_plugin -j16
 ```
 
-构建成功后部署库和应用；仅应用变化时可直接部署：
+构建成功后部署库和应用；仅应用变化时可直接部署。`deploy.sh`和兼容测试使用`build/hcomm`，不会在部署或测试时自动更新源码：
 
 ```bash
 # Host3容器

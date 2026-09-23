@@ -7,11 +7,12 @@ export CANN=${CANN:-/usr/local/Ascend/cann-9.1.0}
 source "$CANN/set_env.sh"
 case "$role" in host|a3) ;; *) echo "Invalid role: $role" >&2; exit 2;; esac
 mkdir -p build
+test -f build/hcomm/include/hcomm_res.h || { echo "Run bash build.sh $role first" >&2; exit 1; }
 python3 - <<'PY'
 from pathlib import Path
 import hashlib, json, os, shutil, subprocess
 root = Path.cwd()
-build = root / 'reference/hcomm/build'
+build = root / 'build/hcomm/build'
 cann = Path(os.environ['CANN'])
 copies = [(p, cann/'lib64'/p.name) for p in (build/'src').rglob('*.so')]
 copies += [(p, cann/'hcomm_plugin'/p.name)
@@ -30,7 +31,7 @@ for src, dst in copies:
 (root/'build/deployed_libraries.json').write_text(json.dumps(manifest, indent=2)+'\n')
 PY
 flags=(-std=c++14 -D_GLIBCXX_USE_CXX11_ABI=0 -O2 -Wall -Wextra -Werror
-       -I"$PWD/reference/hcomm/include" -I"$CANN/include")
+       -I"$PWD/build/hcomm/include" -I"$CANN/include")
 libs=(-L"$CANN/lib64" -Wl,-rpath,"$CANN/lib64" -Wl,-rpath-link,"$CANN/lib64")
 g++ "${flags[@]}" host_server.cpp "${libs[@]}" -lhcomm -lc_sec -ldl -pthread -o build/host_server
 g++ "${flags[@]}" aggregate_host.cpp "${libs[@]}" -lhcomm -lc_sec -ldl -pthread -o build/aggregate_host
@@ -38,7 +39,7 @@ if [ "$role" = host ]; then exit 0; fi
 test "$role" = a3
 g++ "${flags[@]}" npu_reader.cpp "${libs[@]}" -lhcomm -lascendcl -lc_sec -ldl -pthread -o build/npu_reader
 g++ "${flags[@]}" aggregate_npu.cpp "${libs[@]}" -lhcomm -lascendcl -lc_sec -ldl -pthread -o build/aggregate_npu
-device="$PWD/reference/hcomm/build/device_build"
+device="$PWD/build/hcomm/build/device_build"
 "$CANN/toolkit/toolchain/hcc/bin/aarch64-target-linux-gnu-g++" "${flags[@]}" \
     -DSTANDARD_HCOMM_AICPU -shared -fPIC npu_reader.cpp aggregate_kernel.cpp \
     -L"$device/src/legacy/ascend910/framework" -Wl,-z,defs -Wl,-rpath,'$ORIGIN' \
@@ -48,7 +49,7 @@ from pathlib import Path
 import hashlib, json, os, shutil, subprocess, tarfile
 root = Path.cwd()
 cann = Path(os.environ['CANN'])
-device = root/'reference/hcomm/build/device_build'
+device = root/'build/hcomm/build/device_build'
 manifest_path = root/'build/deployed_libraries.json'
 manifest = json.loads(manifest_path.read_text())
 for name in ('cann-hcomm-compat.tar.gz', 'cann-hccd-compat.tar.gz', 'cann-hcomm-compat.ini'):
